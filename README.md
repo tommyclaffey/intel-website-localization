@@ -166,7 +166,7 @@ loses its name.
 |---|---|---|
 | **RTL adaptation** | 15 | `dir="rtl"` + Bootstrap's **RTL build swapped in** (`localize.js → applyDirection`) + logical CSS properties + 8 RTL fixes in `script.js`. Try `?lang=ar` |
 | **Responsive three-column section** | 10 | `.pillars` — Bootstrap `row g-4` / `col-12 col-md-4`, Bootstrap Icons in every `<h3>`, one `.btn-intel` "Learn more" style on all three |
-| **Subscription form + footer** | 10 | `.subscribe` — styled Bootstrap form, validated by `subscribe.js`. Footer with labelled `<nav>` (Privacy Policy · Terms of Use · Contact) and a copyright line |
+| **Subscription form + footer** | 10 | `.subscribe` — styled Bootstrap form, validated by `subscribe.js`. Footer with a copyright line and image credits |
 | **Accessibility (Lighthouse ≥ 90)** | 15 | **100** in English, **100** in Arabic, **100** on mobile (Lighthouse 12). Labels, `aria-invalid`, errors tied with `aria-describedby`, live-region confirmation, contrast fixed |
 | **LevelUp — auto-detect language** | +10 | Opens in the browser's language (`navigator.languages`). A `MutationObserver` watches `<html>` for the two signals Google Translate leaves — the `lang` attribute and the `translated-rtl` / `translated-ltr` class — and switches RTL on or off to match. **To test:** right-click → Translate to Arabic → layout flips; Show original → flips back |
 | **LevelUp — Bootstrap component** | +10 | Three **modals** behind the "Learn more" buttons — focus moves in, Esc closes, focus returns |
