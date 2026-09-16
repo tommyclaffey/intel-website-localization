@@ -32,6 +32,14 @@
      right now" is correct at every moment, because it is recomputed rather than
      remembered. Scroll, resize and pointer movement all land in the same place
      and none of them can disagree. */
+  /* ⚠️ Direction is read LIVE, never cached.
+
+     The language switcher can flip the page at any moment, so a value captured
+     at load would be stale the first time someone picks Arabic -- and stale in
+     the worst way, because every measurement below would still be correct for
+     the direction the page no longer has. */
+  const isRTL = () => document.documentElement.dir === 'rtl';
+
   let pointerX = null;      // last known pointer position, viewport coords
   let focusedCard = null;   // keyboard overrides the pointer
   let dragging = false;     // the rail is being dragged
@@ -47,13 +55,23 @@
   function progress() {
     const scrollable = track.scrollWidth - track.clientWidth;
     if (scrollable <= 1) return null;
-    return track.scrollLeft / scrollable;
+    /* ⚠️ Math.abs, and this is the single most important line in the RTL work.
+
+       In a right-to-left container scrollLeft is 0 at the START -- which is the
+       RIGHT edge -- and goes NEGATIVE as you scroll. So the raw value produced
+       a ratio between 0 and -1, the dot pinned itself at 0% and never moved,
+       and both edge fades stayed off. Normalising to a distance-from-start
+       makes every calculation below direction-agnostic. */
+    return Math.abs(track.scrollLeft) / scrollable;
   }
 
   /** Put the dot (and the fill behind it) at a 0–1 position along the rail. */
   function place(ratio) {
     const percent = (Math.max(0, Math.min(1, ratio)) * 100).toFixed(2) + '%';
-    dot.style.left = percent;
+    /* inset-inline-start, not left. The browser resolves it to left or right
+       from the dir attribute, so one line covers both directions -- and the
+       matching transition in styles.css names the same property. */
+    dot.style.insetInlineStart = percent;
     fill.style.width = percent;
   }
 
@@ -70,7 +88,12 @@
     const railBox = rail.getBoundingClientRect();
     if (railBox.width === 0) return 0;
     const centre = cardBox.left + cardBox.width / 2;
-    return (centre - railBox.left) / railBox.width;
+    /* Measured from the INLINE start, which is the rail's right edge in RTL.
+       Using railBox.left in both directions put the first card at ratio 1 and
+       the last at 0 -- the dot ran backwards, smoothly and convincingly. */
+    return isRTL()
+      ? (railBox.right - centre) / railBox.width
+      : (centre - railBox.left) / railBox.width;
   }
 
   /**
@@ -127,8 +150,13 @@
        trackpad and on a zoomed page, so it lands at 0.4 or at max - 0.6 and a
        strict comparison never fires. */
     const max = track.scrollWidth - track.clientWidth;
-    track.classList.toggle('fade-left', track.scrollLeft > 1);
-    track.classList.toggle('fade-right', track.scrollLeft < max - 1);
+    /* Same normalisation as progress(): `pos` is distance travelled from the
+       start, never a signed offset. The class names still read left/right, but
+       they now mean inline-start and inline-end -- styles.css flips the mask
+       under [dir="rtl"] so the fade lands on the correct physical edge. */
+    const pos = Math.abs(track.scrollLeft);
+    track.classList.toggle('fade-left', pos > 1);
+    track.classList.toggle('fade-right', pos < max - 1);
 
     const card = activeCard();
 
@@ -214,9 +242,16 @@
   function scrollToPointer(clientX, behavior) {
     const box = rail.getBoundingClientRect();
     if (box.width === 0) return;
-    const ratio = Math.max(0, Math.min(1, (clientX - box.left) / box.width));
+    const rtl = isRTL();
+    const raw = rtl ? (box.right - clientX) : (clientX - box.left);
+    const ratio = Math.max(0, Math.min(1, raw / box.width));
     const scrollable = track.scrollWidth - track.clientWidth;
-    track.scrollTo({ left: ratio * scrollable, behavior: behavior });
+    /* The target is negated in RTL for the same reason progress() takes an
+       absolute value: scrollTo still speaks in signed offsets even though the
+       ratio above does not. Without the sign the bar jumped to the far end on
+       the first press and refused to come back. */
+    const target = ratio * scrollable;
+    track.scrollTo({ left: rtl ? -target : target, behavior: behavior });
   }
 
   rail.addEventListener('pointerdown', function (event) {
@@ -285,15 +320,34 @@
     const step = track.clientWidth * 0.9;   // most of a screen, keeping context
     let delta = 0;
 
-    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') delta = step;
-    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') delta = -step;
-    else if (event.key === 'Home') delta = -track.scrollWidth;
-    else if (event.key === 'End') delta = track.scrollWidth;
+    /* ⚠️ Arrow keys follow the SCRIPT, not the keycap.
+
+       In Arabic the timeline advances leftwards, so ArrowLeft has to move
+       forward. Hard-coding right-means-forward is the accessibility bug that
+       survives every visual QA pass, because the layout looks perfect and only
+       the keyboard disagrees.
+
+       Home and End are unaffected: "start" and "end" are already logical. */
+    const forward = isRTL() ? -step : step;
+
+    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') delta = forward;
+    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') delta = -forward;
+    else if (event.key === 'Home') delta = isRTL() ? track.scrollWidth : -track.scrollWidth;
+    else if (event.key === 'End') delta = isRTL() ? -track.scrollWidth : track.scrollWidth;
     else return;                            // not ours — let the browser have it
 
     event.preventDefault();
     track.scrollBy({ left: delta, behavior: 'smooth' });
   });
+
+  /* ⚠️ Re-measure after a language change, and do it on the NEXT frame.
+
+     Switching language changes three things this file measures: the direction,
+     the text, and the font. New copy reflows the cards, so scrollWidth is
+     different -- and the handler fires before the browser has laid any of it
+     out, so reading immediately returns the OLD geometry. schedule() already
+     defers to requestAnimationFrame, which is exactly the wait needed. */
+  document.addEventListener('languagechange', schedule);
 
   // A late font or stylesheet can change the track's measurements after the
   // first paint.

@@ -844,3 +844,162 @@ body {
    a different value. The DOT is what changes colour; the bar just moves. */
 
 
+
+/* ========================================================================
+   LOCALIZATION
+   ========================================================================
+
+   Two jobs: style the language control, and make everything that was written
+   in PHYSICAL directions work when the page is flipped.
+
+   The original stylesheet is not wrong -- left/right is the correct way to
+   write CSS for one direction. It just has one direction baked in, and that
+   assumption is invisible until a language arrives that does not share it. */
+
+/* ---- The language control ---------------------------------------------- */
+
+/* Normal flow, not absolute. The hero has no positioning context and giving it
+   one would change what .hero__art is positioned against -- a real risk for a
+   cosmetic gain. justify-content does the same job with no side effects, and
+   `flex-end` is already logical: it follows the writing direction for free. */
+.langbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-4) var(--space-6) 0;
+  position: relative;
+  z-index: 3;
+}
+
+/* Visually hidden, NOT display:none.
+
+   The select shows the current language name, so a sighted user needs no
+   label. A screen reader still does -- an unlabelled select announces only
+   "combo box". display:none or visibility:hidden would remove it from the
+   accessibility tree along with the screen, which is the whole point of
+   doing this the long way. */
+.langbar__label {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+.langbar__select {
+  font-family: var(--font);
+  font-size: var(--t-small);
+  color: var(--surface);
+  background: rgba(255, 255, 255, .10);
+  border: 1px solid rgba(255, 255, 255, .28);
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  /* 44px is the minimum comfortable touch target. The select is smaller than
+     that visually, so the height comes from min-height rather than padding,
+     which would also inflate the text box. */
+  min-height: 34px;
+  transition: background .18s ease, border-color .18s ease;
+}
+
+.langbar__select:hover { background: rgba(255, 255, 255, .18); }
+
+.langbar__select:focus-visible {
+  outline: 3px solid var(--intel-light);
+  outline-offset: 3px;
+}
+
+/* The dropdown list itself renders in the OS, not the page, so it does not
+   inherit the light-on-dark treatment above. Without this the options are
+   white text on a white menu in several browsers. */
+.langbar__select option { color: var(--ink); background: var(--surface); }
+
+/* ---- Physical → logical ------------------------------------------------ */
+
+/* These override earlier rules rather than editing them, so the original
+   reasoning stays readable in place and the diff for this project is one
+   block rather than thirty scattered edits. */
+
+.track {
+  /* was scroll-padding-left */
+  scroll-padding-inline-start: var(--space-6);
+}
+
+.progress__fill {
+  /* was inset: 0 auto 0 0 -- anchored to the physical left edge */
+  inset: auto;
+  inset-block: 0;
+  inset-inline-start: 0;
+  inset-inline-end: auto;
+}
+
+.progress__dot {
+  /* was left: 0% with margin: -8px 0 0 -8px */
+  left: auto;
+  inset-inline-start: 0%;
+  margin: 0;
+  margin-block-start: -8px;
+  margin-inline-start: -8px;
+}
+
+/* script.js now writes inset-inline-start instead of left, so the transition
+   has to name the property that actually changes -- otherwise the dot
+   teleports while the fill behind it eases, and they come apart. */
+.progress__fill,
+.progress__dot {
+  transition: width .18s ease, inset-inline-start .18s ease,
+              transform .18s ease, background .18s ease;
+}
+
+/* ---- Right-to-left ------------------------------------------------------ */
+
+/* The three things logical properties cannot fix, because a gradient angle is
+   a number and a number has no writing direction. */
+
+[dir="rtl"] .track {
+  -webkit-mask-image: linear-gradient(to left,
+      transparent 0, #000 var(--fade-left),
+      #000 calc(100% - var(--fade-right)), transparent 100%);
+  mask-image: linear-gradient(to left,
+      transparent 0, #000 var(--fade-left),
+      #000 calc(100% - var(--fade-right)), transparent 100%);
+}
+
+/* --fade-left now means "the fade at the INLINE START", which is the right
+   edge here. The class names kept their original spelling on purpose: renaming
+   them would have touched script.js, this file and the markup to change
+   nothing a user can see. */
+
+[dir="rtl"] .progress__fill {
+  background: linear-gradient(270deg, var(--intel-light), var(--intel-blue));
+}
+
+/* ---- Scripts that are not Latin ---------------------------------------- */
+
+/* "Intel Clear" has no Japanese or Arabic glyphs, so both would fall through
+   to Arial and render in whatever the OS substitutes -- usually a mismatched
+   weight beside the Latin text in the same line. Naming the system faces keeps
+   the page in one voice. */
+:root[lang="ja"] {
+  --font: "Intel Clear", "Hiragino Sans", "Yu Gothic", "Noto Sans JP",
+          "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+
+:root[lang="ar"] {
+  --font: "Intel Clear", "Geeza Pro", "Noto Sans Arabic", "Segoe UI",
+          "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+
+/* Arabic script has taller ascenders and deeper descenders than Latin at the
+   same size, so the tight display leading clips. Only the leading changes --
+   the type scale itself is shared, so the hierarchy stays identical. */
+:root[lang="ar"] .hero__title { line-height: 1.25; }
+:root[lang="ar"] .card__reveal p { line-height: 1.8; }
+
+/* Japanese has no spaces, so overflow-wrap: break-word never fires and a long
+   run cannot break. strict keeps it off the characters that may not start or
+   end a line. */
+:root[lang="ja"] { line-break: strict; word-break: normal; }

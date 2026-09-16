@@ -10,6 +10,22 @@
 </head>
 <body>
 
+  <!-- ============================ LANGUAGE ============================ -->
+  <!-- A <select>, not a row of buttons.
+
+       Four languages fit as buttons; twelve do not, and the control should not
+       have to be rebuilt when the fifth is added. A select also arrives with
+       keyboard support, a native mobile picker, and a screen-reader
+       announcement already correct -- all of which buttons would have to
+       re-implement by hand.
+
+       The options are built in localize.js from the dictionary itself, so a new
+       language is a data change and this markup never moves. -->
+  <div class="langbar">
+    <label class="langbar__label" for="lang-select" data-i18n="a11y.lang">Choose a language</label>
+    <select class="langbar__select" id="lang-select"></select>
+  </div>
+
   <!-- ============================== HERO ============================== -->
   <header class="hero">
     <div class="hero__inner">
@@ -26,11 +42,11 @@
            derived from the 2023 file rather than invented. -->
       <img class="hero__logo" src="assets/intel-logo-white.svg" alt="Intel" width="240" height="88">
 
-      <h1 class="hero__title">Sustainability through the ages</h1>
+      <h1 class="hero__title" data-i18n="hero.title">Sustainability through the ages</h1>
 
       <span class="hero__rule" aria-hidden="true"></span>
 
-      <p class="hero__sub">
+      <p class="hero__sub" data-i18n="hero.sub">
         Explore Intel&rsquo;s journey through time &mdash; from its founding to a
         net-zero future &mdash; and how a commitment to innovation has shaped a
         more sustainable path for technology and the planet.
@@ -51,8 +67,8 @@
   <main>
     <section class="timeline" aria-labelledby="timeline-heading">
       <header class="timeline__intro">
-        <p class="timeline__eyebrow">1968 &mdash; 2050</p>
-        <h2 id="timeline-heading" class="timeline__heading">Six decades of milestones</h2>
+        <p class="timeline__eyebrow"><span data-year="1968">1968</span> &mdash; <span data-year="2050">2050</span></p>
+        <h2 id="timeline-heading" class="timeline__heading" data-i18n="tl.heading">Six decades of milestones</h2>
       </header>
 
       <!-- An ordered list, because a timeline IS an ordered list. Screen
@@ -60,120 +76,120 @@
       <ol class="track">
 
         <li class="card" tabindex="0">
-          <img class="card__img" src="assets/1968-founding.jpg" alt="An Intel chip on a circuit board, picked out in colour against black and white">
+          <img class="card__img" data-i18n-alt="c1968.alt" src="assets/1968-founding.jpg" alt="An Intel chip on a circuit board, picked out in colour against black and white">
           <div class="card__body">
             <h3 class="card__title">
-            <span class="card__year">1968</span>
-              <span class="card__name">Intel is founded</span>
+            <span class="card__year" data-year="1968">1968</span>
+              <span class="card__name" data-i18n="c1968.name">Intel is founded</span>
             </h3>
           </div>
           <div class="card__reveal">
-            <p>Robert Noyce and Gordon Moore found Intel in Mountain View, California,
+            <p data-i18n="c1968.body">Robert Noyce and Gordon Moore found Intel in Mountain View, California,
                beginning a company whose efficiency gains would later shape the energy
                footprint of computing worldwide.</p>
           </div>
         </li>
 
         <li class="card" tabindex="0">
-          <img class="card__img" src="assets/1971-first-microprocessor.jpg" alt="Macro photograph of an Intel Core processor seated in its socket">
+          <img class="card__img" data-i18n-alt="c1971.alt" src="assets/1971-first-microprocessor.jpg" alt="Macro photograph of an Intel Core processor seated in its socket">
           <div class="card__body">
             <h3 class="card__title">
-            <span class="card__year">1971</span>
-              <span class="card__name">The first microprocessor</span>
+            <span class="card__year" data-year="1971">1971</span>
+              <span class="card__name" data-i18n="c1971.name">The first microprocessor</span>
             </h3>
           </div>
           <div class="card__reveal">
-            <p>The Intel 4004 puts a complete CPU on a single chip. Integration is the
+            <p data-i18n="c1971.body">The Intel 4004 puts a complete CPU on a single chip. Integration is the
                original efficiency story: fewer parts, less material, and far less power
                for the same work.</p>
           </div>
         </li>
 
         <li class="card" tabindex="0">
-          <img class="card__img" src="assets/2007-lead-free.jpg" alt="An Intel Core processor at the centre of a blue circuit board">
+          <img class="card__img" data-i18n-alt="c2007.alt" src="assets/2007-lead-free.jpg" alt="An Intel Core processor at the centre of a blue circuit board">
           <div class="card__body">
             <h3 class="card__title">
-            <span class="card__year">2007</span>
-              <span class="card__name">Lead-free processors</span>
+            <span class="card__year" data-year="2007">2007</span>
+              <span class="card__name" data-i18n="c2007.name">Lead-free processors</span>
             </h3>
           </div>
           <div class="card__reveal">
-            <p>Intel goes 100% lead-free across its entire 45nm processor family,
+            <p data-i18n="c2007.body">Intel goes 100% lead-free across its entire 45nm processor family,
                removing a hazardous heavy metal from products that ship by the
                hundreds of millions.</p>
           </div>
         </li>
 
         <li class="card" tabindex="0">
-          <img class="card__img" src="assets/2008-green-power.jpg" alt="Rows of solar panels in bright sun">
+          <img class="card__img" data-i18n-alt="c2008.alt" src="assets/2008-green-power.jpg" alt="Rows of solar panels in bright sun">
           <div class="card__body">
             <h3 class="card__title">
-            <span class="card__year">2008</span>
-              <span class="card__name">Largest green power buyer</span>
+            <span class="card__year" data-year="2008">2008</span>
+              <span class="card__name" data-i18n="c2008.name">Largest green power buyer</span>
             </h3>
           </div>
           <div class="card__reveal">
-            <p>Intel becomes the largest voluntary purchaser of green power in the
+            <p data-i18n="c2008.body">Intel becomes the largest voluntary purchaser of green power in the
                United States with a 1.3 billion kilowatt-hour commitment, and holds
                the top spot for years afterwards.</p>
           </div>
         </li>
 
         <li class="card" tabindex="0">
-          <img class="card__img" src="assets/2020-rise.jpg" alt="Wind turbines on open land">
+          <img class="card__img" data-i18n-alt="c2020.alt" src="assets/2020-rise.jpg" alt="Wind turbines on open land">
           <div class="card__body">
             <h3 class="card__title">
-            <span class="card__year">2020</span>
-              <span class="card__name">The RISE strategy</span>
+            <span class="card__year" data-year="2020">2020</span>
+              <span class="card__name" data-i18n="c2020.name">The RISE strategy</span>
             </h3>
           </div>
           <div class="card__reveal">
-            <p>Intel launches RISE &mdash; Responsible, Inclusive, Sustainable, Enabling &mdash;
+            <p data-i18n="c2020.body">Intel launches RISE &mdash; Responsible, Inclusive, Sustainable, Enabling &mdash;
                setting 2030 goals and committing to use its scale to move the wider
                technology industry, not just its own operations.</p>
           </div>
         </li>
 
         <li class="card" tabindex="0">
-          <img class="card__img" src="assets/2030-water.jpg" alt="Aerial view of a water treatment facility">
+          <img class="card__img" data-i18n-alt="c2030.alt" src="assets/2030-water.jpg" alt="Aerial view of a water treatment facility">
           <div class="card__body">
             <h3 class="card__title">
-            <span class="card__year">2030</span>
-              <span class="card__name">Net positive water</span>
+            <span class="card__year" data-year="2030">2030</span>
+              <span class="card__name" data-i18n="c2030.name">Net positive water</span>
             </h3>
           </div>
           <div class="card__reveal">
-            <p>Goals for the decade: 100% renewable electricity globally, net positive
+            <p data-i18n="c2030.body">Goals for the decade: 100% renewable electricity globally, net positive
                water, and zero total waste to landfill. Chip fabrication is water-intensive,
                which is exactly why returning more than is used matters.</p>
           </div>
         </li>
 
         <li class="card" tabindex="0">
-          <img class="card__img" src="assets/2040-netzero.jpg" alt="Wind farm at sunset">
+          <img class="card__img" data-i18n-alt="c2040.alt" src="assets/2040-netzero.jpg" alt="Wind farm at sunset">
           <div class="card__body">
             <h3 class="card__title">
-            <span class="card__year">2040</span>
-              <span class="card__name">Net-zero operations</span>
+            <span class="card__year" data-year="2040">2040</span>
+              <span class="card__name" data-i18n="c2040.name">Net-zero operations</span>
             </h3>
           </div>
           <div class="card__reveal">
-            <p>A commitment to net-zero greenhouse gas emissions across Intel&rsquo;s own
+            <p data-i18n="c2040.body">A commitment to net-zero greenhouse gas emissions across Intel&rsquo;s own
                operations &mdash; Scope 1 and 2 &mdash; covering the factories and the
                electricity that runs them.</p>
           </div>
         </li>
 
         <li class="card" tabindex="0">
-          <img class="card__img" src="assets/2050-scope3.jpg" alt="Aerial view of a dense pine forest">
+          <img class="card__img" data-i18n-alt="c2050.alt" src="assets/2050-scope3.jpg" alt="Aerial view of a dense pine forest">
           <div class="card__body">
             <h3 class="card__title">
-            <span class="card__year">2050</span>
-              <span class="card__name">Net-zero value chain</span>
+            <span class="card__year" data-year="2050">2050</span>
+              <span class="card__name" data-i18n="c2050.name">Net-zero value chain</span>
             </h3>
           </div>
           <div class="card__reveal">
-            <p>The hardest target: net-zero upstream emissions across suppliers and
+            <p data-i18n="c2050.body">The hardest target: net-zero upstream emissions across suppliers and
                materials. Scope 3 is most of a chip company&rsquo;s real footprint, and it
                cannot be reached alone.</p>
           </div>
@@ -188,33 +204,40 @@
            a control, and a control a screen reader cannot see is a control some
            people simply do not have. -->
       <div class="progress" role="slider" tabindex="0"
-           aria-label="Timeline scroll position"
+           data-i18n-aria-label="a11y.progress" aria-label="Timeline scroll position"
            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
         <span class="progress__fill"></span>
         <span class="progress__dot"></span>
       </div>
 
       <p class="timeline__hint">
-        <span class="hint-desktop">Scroll or drag the bar to move through time &middot; hover a card for the detail</span>
-        <span class="hint-mobile">Scroll to move through time &middot; tap a card for the detail</span>
+        <span class="hint-desktop" data-i18n="hint.desktop">Scroll or drag the bar to move through time &middot; hover a card for the detail</span>
+        <span class="hint-mobile" data-i18n="hint.mobile">Scroll to move through time &middot; tap a card for the detail</span>
       </p>
     </section>
   </main>
 
   <footer class="footer">
     <p class="footer__note">
-      Student coursework. Milestones are drawn from Intel&rsquo;s published RISE
+      <span data-i18n="footer.a">Student coursework. Milestones are drawn from Intel&rsquo;s published RISE
       commitments and press releases. Photography is CC0 and Unsplash-licensed;
       the Intel wordmark is public domain via Wikimedia Commons. Per-image
-      credits are in <code>assets/CREDITS.json</code>. Intel and the Intel logo
+      credits are in</span>
+      <code>assets/CREDITS.json</code>.
+      <span data-i18n="footer.b">Intel and the Intel logo
       are trademarks of Intel Corporation &mdash; this page is not affiliated
-      with or endorsed by Intel.
+      with or endorsed by Intel.</span>
     </p>
   </footer>
 
   <!-- `defer` so the parser is never blocked: the script downloads alongside
        the HTML and runs once the DOM is ready, which is also why it can query
        for .track immediately without waiting for an event. -->
+  <!-- ORDER MATTERS. i18n.js defines the dictionary, localize.js consumes it.
+       `defer` preserves document order while still not blocking the parser, so
+       this reads top to bottom and runs top to bottom. -->
+  <script src="i18n.js" defer></script>
+  <script src="localize.js" defer></script>
   <script src="script.js" defer></script>
 
 </body>
