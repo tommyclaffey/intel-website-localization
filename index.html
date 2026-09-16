@@ -336,11 +336,17 @@
                    can show messages that are styled, translated and announced.
                    The `required` and `type="email"` attributes stay: they are
                    still what the validation checks against. -->
-              <form id="subscribe-form" class="subscribe__form row g-3" novalidate aria-describedby="subscribe-desc">
+              <!-- The card is a plain wrapper and the form is a normal Bootstrap row
+                   inside it. Padding lives on the card, gutters live on the row, so
+                   the fields sit exactly the card's padding in from every edge.
+                   (Padding the .row itself fought the row's negative margins and
+                   left the top, sides and bottom all different.) -->
+              <div class="subscribe__card">
+              <form id="subscribe-form" class="row g-3" novalidate aria-describedby="subscribe-desc">
 
                 <!-- The key for the asterisks goes BEFORE the fields, where it is
                      read first -- not beside the button, after the fact. -->
-                <p class="col-12 subscribe__required"><span aria-hidden="true">* </span><span data-i18n="sub.required">Required</span></p>
+                <p class="subscribe__required"><span aria-hidden="true">* </span><span data-i18n="sub.required">Required</span></p>
 
                 <div class="col-12 col-md-6">
                   <!-- A visible <label for>, never a placeholder standing in for
@@ -396,8 +402,11 @@
                 <!-- role="status" is a polite live region: the success message is
                      read out when it appears, without stealing focus. It collapses
                      to nothing while empty, so it does not pad the panel. -->
-                <p id="subscribe-status" class="col-12 subscribe__status" role="status" aria-live="polite"></p>
+                <div class="col-12 subscribe__status-col">
+                  <p id="subscribe-status" class="subscribe__status" role="status" aria-live="polite"></p>
+                </div>
               </form>
+              </div>
             </div>
           </div>
         </div>

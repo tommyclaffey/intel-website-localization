@@ -1202,26 +1202,39 @@ h1, h2, h3 { font-family: var(--font); }
 .subscribe__lead { margin: var(--space-4) 0 0; max-width: 42ch; color: #DCE8F5; }   /* 9.8:1 darkest stop, 5.2:1 lightest */
 
 /* The form gets its own quiet surface, so it reads as one object rather than
-   loose fields floating on the gradient. */
-.subscribe__form {
-  --bs-gutter-x: var(--space-4);
-  margin: 0;
-  padding: clamp(var(--space-6), 3vw, var(--space-8));
-  padding-top: calc(clamp(var(--space-6), 3vw, var(--space-8)) - var(--bs-gutter-y));
+   loose fields floating on the gradient. ONE padding value, all four sides. */
+.subscribe__card {
+  --card-pad: clamp(var(--space-6), 3vw, var(--space-8));
+  position: relative;
+  padding: var(--card-pad);
   background: rgba(255, 255, 255, .06);
   border: 1px solid rgba(255, 255, 255, .14);
   border-radius: var(--radius);
   backdrop-filter: blur(6px);
 }
+.subscribe__card > .row { --bs-gutter-x: var(--space-4); --bs-gutter-y: var(--space-4); }
 
+/* The asterisk key sits on the SAME line as the first labels, at the far end,
+   instead of taking a row of its own. It stays first in the markup, so a
+   screen reader still hears it before the fields. */
 .subscribe__required {
-  margin-bottom: calc(var(--space-2) * -1);
-  text-align: end;                  /* logical: right in English, left in Arabic */
+  position: absolute;
+  inset-block-start: var(--card-pad);
+  inset-inline-end: var(--card-pad);
+  /* It is still a child of the Bootstrap .row, which gives every child
+     width:100% and gutter padding. Out of the flow, that stretched it across
+     the card and pushed the text off the left edge. */
+  width: auto;
+  max-width: none;
+  padding: 0;
+  margin: 0;
   font-size: var(--t-eyebrow);
+  line-height: calc(var(--t-small) * 1.55);   /* matches the label line box */
   color: #DCE8F5;
 }
 
 .subscribe .form-label {
+  display: block;                   /* inline-block sat 2px low on the line's strut */
   margin-bottom: var(--space-2);
   font-size: var(--t-small);
   font-weight: 600;
@@ -1235,7 +1248,10 @@ h1, h2, h3 { font-family: var(--font); }
   padding-inline: 14px;
   color: var(--ink);
   background-color: #fff;
-  border: 2px solid transparent;
+  /* White, not transparent. Bootstrap clips the background to the padding box,
+     so a transparent border let the dark card show through as a 2px ring and
+     the white field looked inset from its own label. */
+  border: 2px solid #fff;
   border-radius: 10px;
 }
 .subscribe .form-control::placeholder { color: #5B6678; opacity: 1; }   /* 5.9:1 — the default grey is under 3:1 */
@@ -1284,7 +1300,6 @@ h1, h2, h3 { font-family: var(--font); }
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-3) var(--space-6);
-  padding-top: var(--space-2);
 }
 .subscribe .btn-intel {
   --bs-btn-color: var(--intel-night);
@@ -1302,24 +1317,20 @@ h1, h2, h3 { font-family: var(--font); }
 }
 .subscribe__privacy {
   display: flex;
-  align-items: center;
+  align-items: flex-start;          /* lock stays on the first line when the note wraps */
   gap: var(--space-2);
   margin: 0;
   font-size: var(--t-small);
   color: #DCE8F5;
 }
-.subscribe__privacy .bi { color: var(--intel-light); }
+.subscribe__privacy .bi { color: var(--intel-light); line-height: 1.55; }
 
-/* Empty, it takes no space. Filled, it gets a tinted strip so a success is
-   hard to miss -- and the tick means it is not colour-only. */
+/* Empty, the status column takes no space -- its gutter margin is removed, so
+   the card's bottom padding is measured from the button row. It stays
+   RENDERED (not display:none) so the live region is announced when filled. */
+.subscribe__status-col:has(> .subscribe__status:empty) { margin-top: 0; }
 .subscribe__status { margin: 0; font-weight: 600; }
-.subscribe__status:empty { padding: 0; margin-top: calc(var(--bs-gutter-y) * -1); }
 .subscribe__status.is-success {
-  /* A .col-12 carries the gutter as padding; the tint would bleed into it.
-     Pull the box in by half a gutter each side so it lines up with the fields. */
-  width: calc(100% - var(--bs-gutter-x));
-  margin-inline: calc(var(--bs-gutter-x) * .5);
-  margin-top: var(--space-2);
   padding: var(--space-3) var(--space-4);
   background: rgba(0, 199, 253, .12);
   border: 1px solid rgba(0, 199, 253, .35);
@@ -1332,7 +1343,7 @@ h1, h2, h3 { font-family: var(--font); }
   .subscribe__submit { width: 100%; justify-content: center; }
   /* Panel padding + card padding + gutter stacked to ~65px of empty edge on a
      390px screen. The card's own padding gives most of it back. */
-  .subscribe__form { padding: var(--space-3) var(--space-2) var(--space-4); }
+  .subscribe__card { --card-pad: 20px; }
   .subscribe__panel { padding: var(--space-6) var(--space-4); }
 }
 
