@@ -1160,45 +1160,127 @@ h1, h2, h3 { font-family: var(--font); }
 
 /* ---- Newsletter ---- */
 .subscribe__panel {
-  padding: clamp(var(--space-6), 5vw, var(--space-12));
+  position: relative;
+  overflow: hidden;
+  padding: clamp(var(--space-6), 4.5vw, 56px);
   color: #fff;
-  background: linear-gradient(135deg, var(--intel-blue) 0%, var(--intel-deep) 60%, var(--intel-night) 100%);
-  border-radius: var(--radius);
+  background: linear-gradient(135deg, var(--intel-blue) 0%, var(--intel-deep) 55%, var(--intel-night) 100%);
+  border-radius: calc(var(--radius) + 6px);
 }
-.subscribe__heading { color: #fff; max-width: 16ch; }
-.subscribe__lead { margin: var(--space-4) 0 0; color: #DCE8F5; }   /* 9.8:1 on the darkest stop, 5.2:1 on the lightest */
 
-.subscribe .form-label { font-weight: 600; color: #fff; }
+/* A soft cyan glow in the far corner -- Intel's accent, used as light rather
+   than as another block of colour. Decorative, so it sits behind everything. */
+.subscribe__panel::after {
+  content: "";
+  position: absolute;
+  inset-block-end: -40%;
+  inset-inline-end: -10%;
+  width: 55%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(0, 199, 253, .16) 0%, rgba(0, 199, 253, 0) 65%);
+  pointer-events: none;
+}
+.subscribe__panel > .row { position: relative; z-index: 1; }
+
+.subscribe__badge {
+  display: inline-grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  margin-bottom: var(--space-4);
+  border-radius: 12px;
+  font-size: 1.4rem;
+  color: var(--intel-light);
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .16);
+}
+.subscribe__heading { color: #fff; max-width: 15ch; }
+.subscribe__lead { margin: var(--space-4) 0 0; max-width: 42ch; color: #DCE8F5; }   /* 9.8:1 darkest stop, 5.2:1 lightest */
+
+/* The form gets its own quiet surface, so it reads as one object rather than
+   loose fields floating on the gradient. */
+.subscribe__form {
+  --bs-gutter-x: var(--space-4);
+  margin: 0;
+  padding: clamp(var(--space-6), 3vw, var(--space-8));
+  padding-top: calc(clamp(var(--space-6), 3vw, var(--space-8)) - var(--bs-gutter-y));
+  background: rgba(255, 255, 255, .06);
+  border: 1px solid rgba(255, 255, 255, .14);
+  border-radius: var(--radius);
+  backdrop-filter: blur(6px);
+}
+
+.subscribe__required {
+  margin-bottom: calc(var(--space-2) * -1);
+  text-align: end;                  /* logical: right in English, left in Arabic */
+  font-size: var(--t-eyebrow);
+  color: #DCE8F5;
+}
+
+.subscribe .form-label {
+  margin-bottom: var(--space-2);
+  font-size: var(--t-small);
+  font-weight: 600;
+  letter-spacing: .01em;
+  color: #fff;
+}
 .subscribe .req { color: var(--intel-light); }
-.subscribe .form-text { color: #DCE8F5; }
 
 .subscribe .form-control {
   min-height: 48px;
+  padding-inline: 14px;
   color: var(--ink);
   background-color: #fff;
-  border-color: transparent;
+  border: 2px solid transparent;
+  border-radius: 10px;
 }
+.subscribe .form-control::placeholder { color: #5B6678; opacity: 1; }   /* 5.9:1 — the default grey is under 3:1 */
 
-.subscribe .form-check-label { color: #fff; }
-.subscribe .form-check-input { width: 1.25em; height: 1.25em; margin-top: .15em; }
-.subscribe .form-check-input:checked { background-color: var(--intel-light); border-color: var(--intel-light); }
+/* ---- Consent checkbox: bigger, and centred on its label ---- */
+.subscribe__check {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  min-height: 0;
+}
+.subscribe__check .form-check-input {
+  float: none;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  margin: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border: 2px solid rgba(255, 255, 255, .75);
+  border-radius: 6px;
+}
+.subscribe__check .form-check-input:checked {
+  background-color: var(--intel-light);
+  border-color: var(--intel-light);
+  /* Bootstrap's tick is white, which vanishes on cyan. Same path, navy stroke. */
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3e%3cpath fill='none' stroke='%23001A3A' stroke-linecap='round' stroke-linejoin='round' stroke-width='3' d='m6 10 3 3 6-6'/%3e%3c/svg%3e");
+}
+.subscribe__check .form-check-label { flex: 1; color: #fff; cursor: pointer; }
+.subscribe__check .invalid-feedback { flex-basis: 100%; margin-top: 0; }
 
 /* Error text sits on the dark panel, so it needs a LIGHT red, not a dark one.
    An icon is added so the error is not colour-only. */
-.subscribe .invalid-feedback {
-  color: #FFD5D0;
-  font-weight: 600;
-}
+.subscribe .invalid-feedback { color: #FFD5D0; font-weight: 600; font-size: var(--t-small); }
 .subscribe .invalid-feedback::before { content: "⚠ "; }
-.subscribe .form-control.is-invalid { border: 2px solid #FF8A80; }
-.subscribe .form-check-input.is-invalid { border: 2px solid #FF8A80; }
+.subscribe .form-control.is-invalid { border-color: #FF8A80; }
+.subscribe .form-check-input.is-invalid { border-color: #FF8A80; }
 .subscribe .form-check-input.is-invalid ~ .form-check-label { color: #fff; }
 
+/* ---- Button + privacy note on one line ---- */
 .subscribe__actions {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: var(--space-4);
+  gap: var(--space-3) var(--space-6);
+  padding-top: var(--space-2);
 }
 .subscribe .btn-intel {
   --bs-btn-color: var(--intel-night);
@@ -1209,11 +1291,46 @@ h1, h2, h3 { font-family: var(--font); }
   --bs-btn-hover-border-color: #D9F6FF;
   --bs-btn-active-color: var(--intel-night);
   --bs-btn-active-bg: #BDEFFF;
+  --bs-btn-active-border-color: #BDEFFF;
+  --bs-btn-font-size: 1rem;
+  --bs-btn-padding-x: 1.5rem;
+  min-height: 48px;
 }
-.subscribe__required { margin: 0; font-size: var(--t-small); color: #DCE8F5; }
+.subscribe__privacy {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: 0;
+  font-size: var(--t-small);
+  color: #DCE8F5;
+}
+.subscribe__privacy .bi { color: var(--intel-light); }
 
-.subscribe__status { margin: 0; min-height: 1.5em; font-weight: 600; }
+/* Empty, it takes no space. Filled, it gets a tinted strip so a success is
+   hard to miss -- and the tick means it is not colour-only. */
+.subscribe__status { margin: 0; font-weight: 600; }
+.subscribe__status:empty { padding: 0; margin-top: calc(var(--bs-gutter-y) * -1); }
+.subscribe__status.is-success {
+  /* A .col-12 carries the gutter as padding; the tint would bleed into it.
+     Pull the box in by half a gutter each side so it lines up with the fields. */
+  width: calc(100% - var(--bs-gutter-x));
+  margin-inline: calc(var(--bs-gutter-x) * .5);
+  margin-top: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(0, 199, 253, .12);
+  border: 1px solid rgba(0, 199, 253, .35);
+  border-radius: 10px;
+}
 .subscribe__status.is-success::before { content: "✓ "; color: var(--intel-light); }
+
+/* Phones: the button spans the form, the easiest target to hit with a thumb. */
+@media (max-width: 575.98px) {
+  .subscribe__submit { width: 100%; justify-content: center; }
+  /* Panel padding + card padding + gutter stacked to ~65px of empty edge on a
+     390px screen. The card's own padding gives most of it back. */
+  .subscribe__form { padding: var(--space-3) var(--space-2) var(--space-4); }
+  .subscribe__panel { padding: var(--space-6) var(--space-4); }
+}
 
 /* Email addresses are always left-to-right, even inside an Arabic form. */
 [dir="rtl"] .subscribe input[type="email"] { direction: ltr; text-align: right; }
