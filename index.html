@@ -415,6 +415,19 @@
   </main>
 
   <footer class="footer">
+    <!-- A <nav> with its own label, so a screen reader lists it as "Footer,
+         navigation" -- distinct from any main navigation. Placeholder links, as
+         the brief allows. -->
+    <nav class="footer__nav" data-i18n-aria-label="footer.nav" aria-label="Footer">
+      <ul class="footer__links">
+        <li><a href="#" data-i18n="footer.privacy">Privacy Policy</a></li>
+        <li><a href="#" data-i18n="footer.terms">Terms of Use</a></li>
+        <li><a href="#" data-i18n="footer.contact">Contact</a></li>
+      </ul>
+    </nav>
+
+    <p class="footer__copy">&copy; <span data-year="2026">2026</span> <span data-i18n="footer.copy">Tommy Claffey · Student project</span></p>
+
     <p class="footer__note">
       <span data-i18n="footer.a">Student coursework. Milestones are drawn from Intel&rsquo;s published RISE
       commitments and press releases. Photography is CC0 and Unsplash-licensed;

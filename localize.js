@@ -168,17 +168,25 @@
      A MutationObserver watches that one attribute. Whenever it changes, by
      anything, direction is recomputed from it. The page's layout follows the
      language it is actually in, not the language it was last told. */
-  let lastLang = document.documentElement.getAttribute('lang');
+  /* Two signals, because translators do not all use the same one:
+     - Chrome's built-in translate and the Google Translate widget both rewrite
+       <html lang> to the target language
+     - Google Translate also adds a class to <html>: `translated-rtl` or
+       `translated-ltr`. When present it is the most direct answer, so it wins. */
+  let lastKey = null;
   new MutationObserver(function () {
     const root = document.documentElement;
     const current = root.getAttribute('lang') || DEFAULT_LANG;
-    if (current === lastLang) return;
-    lastLang = current;
+    const cls = root.classList.contains('translated-rtl') ? 'rtl'
+              : root.classList.contains('translated-ltr') ? 'ltr' : '';
+    const key = current + '|' + cls;
+    if (key === lastKey) return;
+    lastKey = key;
 
-    const dir = isRTL(current) ? 'rtl' : 'ltr';
+    const dir = cls || (isRTL(current) ? 'rtl' : 'ltr');
     applyDirection(dir);
     document.dispatchEvent(new CustomEvent('languagechange', {
       detail: { lang: current, dir: dir }
     }));
-  }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang', 'class'] });
 })();
