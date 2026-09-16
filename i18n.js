@@ -23,6 +23,7 @@ const TRANSLATIONS = {
   en: {
     'lang.label': 'English',
     'doc.title': 'Intel — Sustainability Through the Ages',
+    'hero.alt': 'Aerial view of wind turbines across green and brown farm fields beneath scattered clouds',
     'hero.title': 'Sustainability through the ages',
     'hero.sub': 'Explore Intel’s journey through time — from its founding to a net-zero future — and how a commitment to innovation has shaped a more sustainable path for technology and the planet.',
     'tl.heading': 'Six decades of milestones',
@@ -88,6 +89,7 @@ const TRANSLATIONS = {
   es: {
     'lang.label': 'Español',
     'doc.title': 'Intel — La sostenibilidad a través del tiempo',
+    'hero.alt': 'Vista aérea de aerogeneradores sobre campos de cultivo verdes y marrones bajo nubes dispersas',
     'hero.title': 'La sostenibilidad a través del tiempo',
     'hero.sub': 'Recorre la trayectoria de Intel a lo largo del tiempo — desde su fundación hasta un futuro de cero emisiones netas — y cómo su compromiso con la innovación ha trazado un camino más sostenible para la tecnología y el planeta.',
     'tl.heading': 'Seis décadas de hitos',
@@ -153,6 +155,7 @@ const TRANSLATIONS = {
   ja: {
     'lang.label': '日本語',
     'doc.title': 'Intel — 時代を越えたサステナビリティ',
+    'hero.alt': '点在する雲の下、緑と茶色の農地に並ぶ風力発電機の空撮写真',
     'hero.title': '時代を越えたサステナビリティ',
     'hero.sub': '創業からネットゼロの未来まで、インテルの歩みをたどります。イノベーションへの姿勢が、テクノロジーと地球のためのより持続可能な道をどう切り開いてきたのかをご覧ください。',
     'tl.heading': '60年にわたる節目',
@@ -218,6 +221,7 @@ const TRANSLATIONS = {
   ar: {
     'lang.label': 'العربية',
     'doc.title': 'إنتل — الاستدامة عبر العصور',
+    'hero.alt': 'منظر جوي لتوربينات رياح فوق حقول زراعية خضراء وبنية تحت غيوم متفرقة',
     'hero.title': 'الاستدامة عبر العصور',
     'hero.sub': 'تابع مسيرة إنتل عبر الزمن — من تأسيسها إلى مستقبل خالٍ من الانبعاثات — وكيف رسم الالتزام بالابتكار مسارًا أكثر استدامة للتقنية وللكوكب.',
     'tl.heading': 'ستة عقود من المحطات الفارقة',

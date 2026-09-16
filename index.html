@@ -81,12 +81,12 @@
       </p>
       </div>
 
-      <!-- alt="" because the image is illustrative, not informational: the
-           headline and subhead already say everything it conveys. An empty alt
-           tells a screen reader to skip it; LEAVING IT OUT would make the
-           reader announce the filename instead. -->
+      <!-- Project 2 used alt="" here: the photo is illustrative, and an empty
+           alt is the correct way to tell a screen reader to skip decoration.
+           Project 3's rubric asks for descriptive alt attributes, so it now
+           describes the scene -- translated, like every other alt on the page. -->
       <div class="hero__art">
-        <img src="assets/hero-wind.jpg" alt="" width="1800" height="1200">
+        <img src="assets/hero-wind.jpg" data-i18n-alt="hero.alt" alt="Aerial view of wind turbines across green and brown farm fields beneath scattered clouds" width="1800" height="1200">
       </div>
     </div>
   </header>
@@ -429,7 +429,7 @@
        focus inside a landmark it belongs to. Bootstrap handles the rest:
        focus moves in on open, Tab is contained, Esc closes, and focus returns
        to the "Learn more" button that opened it. -->
-  <div class="modal fade" id="modal-p1" tabindex="-1" aria-labelledby="modal-p1-title" aria-hidden="true">
+  <div class="modal fade" role="dialog" id="modal-p1" tabindex="-1" aria-labelledby="modal-p1-title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -451,7 +451,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modal-p2" tabindex="-1" aria-labelledby="modal-p2-title" aria-hidden="true">
+  <div class="modal fade" role="dialog" id="modal-p2" tabindex="-1" aria-labelledby="modal-p2-title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
@@ -473,7 +473,7 @@
       </div>
     </div>
   </div>
-  <div class="modal fade" id="modal-p3" tabindex="-1" aria-labelledby="modal-p3-title" aria-hidden="true">
+  <div class="modal fade" role="dialog" id="modal-p3" tabindex="-1" aria-labelledby="modal-p3-title" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">
         <div class="modal-header">
