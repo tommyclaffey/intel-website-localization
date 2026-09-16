@@ -1056,6 +1056,19 @@ h1, h2, h3 { font-family: var(--font); }
 .langbar__select:hover { background: var(--surface); border-color: var(--intel-blue); }
 .langbar__select:focus-visible { outline-color: var(--intel-blue); }
 
+/* ---- Language bar spacing ----
+
+   The bar had 16px above the select and 0 below, so the control sat on the
+   hero's top edge. Equal padding top and bottom gives it a band of its own.
+
+   Its inline edge now matches the hero content (1400px max, centred), so on a
+   wide screen the select lines up with the photo instead of hugging the window. */
+.langbar {
+  padding-block: var(--space-3);
+  padding-inline: max(var(--space-6), calc((100% - 1400px) / 2));
+}
+
+
 /* ---- Shared section intro ---- */
 .pillars, .subscribe { padding: var(--space-16) 0; }
 .pillars { border-top: 1px solid var(--border); }
