@@ -22,6 +22,10 @@ const TRANSLATIONS = {
 
   en: {
     'lang.label': 'English',
+    'footer.nav': 'Footer',
+    'footer.privacy': 'Privacy Policy',
+    'footer.terms': 'Terms of Use',
+    'footer.contact': 'Contact',
     'footer.copy': 'Tommy Claffey · Student project',
     'doc.title': 'Intel — Sustainability Through the Ages',
     'hero.alt': 'Aerial view of wind turbines across green and brown farm fields beneath scattered clouds',
@@ -89,6 +93,10 @@ const TRANSLATIONS = {
 
   es: {
     'lang.label': 'Español',
+    'footer.nav': 'Pie de página',
+    'footer.privacy': 'Política de privacidad',
+    'footer.terms': 'Términos de uso',
+    'footer.contact': 'Contacto',
     'footer.copy': 'Tommy Claffey · Proyecto académico',
     'doc.title': 'Intel — La sostenibilidad a través del tiempo',
     'hero.alt': 'Vista aérea de aerogeneradores sobre campos de cultivo verdes y marrones bajo nubes dispersas',
@@ -156,6 +164,10 @@ const TRANSLATIONS = {
 
   ja: {
     'lang.label': '日本語',
+    'footer.nav': 'フッター',
+    'footer.privacy': 'プライバシーポリシー',
+    'footer.terms': '利用規約',
+    'footer.contact': 'お問い合わせ',
     'footer.copy': 'Tommy Claffey・学習プロジェクト',
     'doc.title': 'Intel — 時代を越えたサステナビリティ',
     'hero.alt': '点在する雲の下、緑と茶色の農地に並ぶ風力発電機の空撮写真',
@@ -223,6 +235,10 @@ const TRANSLATIONS = {
 
   ar: {
     'lang.label': 'العربية',
+    'footer.nav': 'تذييل الصفحة',
+    'footer.privacy': 'سياسة الخصوصية',
+    'footer.terms': 'شروط الاستخدام',
+    'footer.contact': 'اتصل بنا',
     'footer.copy': 'Tommy Claffey · مشروع دراسي',
     'doc.title': 'إنتل — الاستدامة عبر العصور',
     'hero.alt': 'منظر جوي لتوربينات رياح فوق حقول زراعية خضراء وبنية تحت غيوم متفرقة',
