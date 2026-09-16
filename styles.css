@@ -97,7 +97,20 @@ body {
     linear-gradient(160deg, var(--intel-blue) 0%, var(--intel-deep) 62%, var(--intel-night) 100%);
   color: #FFFFFF;
   padding: clamp(var(--space-12), 9vw, 120px) var(--space-6);
-  text-align: left;
+  /* `start`, not `left`. `left` is physical: in Arabic it pinned the headline
+     and subhead to the LEFT edge of their column while the logo and rule sat on
+     the right -- the text looked indented by ~250px. `start` means "where this
+     language begins reading": left in English, right in Arabic. */
+  text-align: start;
+}
+
+/* The light corner sits behind the logo. The logo moves to the right in
+   Arabic, so the glow moves with it. Gradients have no writing direction,
+   which is why this one needs saying explicitly. */
+[dir="rtl"] .hero {
+  background:
+    radial-gradient(120% 140% at 92% 0%, rgba(0, 199, 253, .18) 0%, transparent 55%),
+    linear-gradient(200deg, var(--intel-blue) 0%, var(--intel-deep) 62%, var(--intel-night) 100%);
 }
 
 /* Two columns: copy left, wafer right. `minmax(0, …)` on the first column is
