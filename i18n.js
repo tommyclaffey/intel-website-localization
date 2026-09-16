@@ -55,7 +55,34 @@ const TRANSLATIONS = {
     'footer.a': 'Student coursework. Milestones are drawn from Intel’s published RISE commitments and press releases. Photography is CC0 and Unsplash-licensed; the Intel wordmark is public domain via Wikimedia Commons. Per-image credits are in',
     'footer.b': 'Intel and the Intel logo are trademarks of Intel Corporation — this page is not affiliated with or endorsed by Intel.',
     'a11y.progress': 'Timeline scroll position',
-    'a11y.lang': 'Choose a language'
+    'a11y.lang': 'Choose a language',
+
+    /* ---- Project 3: commitments, modals, newsletter ---- */
+    'pl.eyebrow': 'RISE 2030 goals',
+    'pl.heading': 'Three commitments, one decade',
+    'p1.title': 'Renewable energy',
+    'p1.body': 'Power every Intel site worldwide with 100% renewable electricity by 2030.',
+    'p1.more': 'Intel’s 2030 goals pair clean supply with lower demand: 100% renewable electricity across global operations, and 4 billion kilowatt-hours of energy conserved between 2020 and 2030.',
+    'p2.title': 'Net positive water',
+    'p2.body': 'Return more fresh water to communities than Intel’s operations consume.',
+    'p2.more': 'Chipmaking needs large volumes of ultra-pure water. Intel’s goal for 2030 is net positive water — conserving 60 billion gallons over the decade and funding restoration projects in the watersheds where it operates.',
+    'p3.title': 'Zero waste to landfill',
+    'p3.body': 'Send no manufacturing waste to landfill, and keep materials in use for longer.',
+    'p3.more': 'By 2030 Intel aims for zero total waste to landfill, and to apply circular economy strategies to 60% of its manufacturing waste streams in partnership with suppliers.',
+    'cta.more': 'Learn more',
+    'modal.close': 'Close',
+    'sub.heading': 'Sign up for the sustainability newsletter',
+    'sub.body': 'Quarterly updates on Intel’s progress toward its 2030 goals. No spam, and you can unsubscribe at any time.',
+    'sub.name': 'Full name',
+    'sub.email': 'Email address',
+    'sub.emailHint': 'We’ll only use this to send the newsletter.',
+    'sub.consent': 'I agree to receive the sustainability newsletter.',
+    'sub.submit': 'Subscribe',
+    'sub.nameErr': 'Please enter your name.',
+    'sub.emailErr': 'Please enter a valid email address, like name@example.com.',
+    'sub.consentErr': 'Please confirm you’d like to receive the newsletter.',
+    'sub.success': 'Thanks for subscribing! This is a demo page, so nothing was sent or stored.',
+    'sub.required': 'Required'
   },
 
   es: {
@@ -93,7 +120,34 @@ const TRANSLATIONS = {
     'footer.a': 'Trabajo académico. Los hitos proceden de los compromisos RISE publicados por Intel y de sus notas de prensa. Las fotografías son CC0 y con licencia de Unsplash; el logotipo de Intel es de dominio público vía Wikimedia Commons. Los créditos por imagen están en',
     'footer.b': 'Intel y el logotipo de Intel son marcas registradas de Intel Corporation — esta página no está afiliada a Intel ni cuenta con su respaldo.',
     'a11y.progress': 'Posición en la cronología',
-    'a11y.lang': 'Elegir idioma'
+    'a11y.lang': 'Elegir idioma',
+
+    /* ---- Project 3: commitments, modals, newsletter ---- */
+    'pl.eyebrow': 'Objetivos RISE 2030',
+    'pl.heading': 'Tres compromisos, una década',
+    'p1.title': 'Energía renovable',
+    'p1.body': 'Abastecer todas las instalaciones de Intel en el mundo con electricidad 100 % renovable para 2030.',
+    'p1.more': 'Los objetivos de Intel para 2030 combinan un suministro limpio con una menor demanda: electricidad 100 % renovable en sus operaciones globales y 4000 millones de kilovatios hora de energía ahorrados entre 2020 y 2030.',
+    'p2.title': 'Agua neta positiva',
+    'p2.body': 'Devolver a las comunidades más agua dulce de la que consumen las operaciones de Intel.',
+    'p2.more': 'La fabricación de chips requiere grandes volúmenes de agua ultrapura. El objetivo de Intel para 2030 es un balance hídrico neto positivo: ahorrar 60 000 millones de galones durante la década y financiar proyectos de restauración en las cuencas donde opera.',
+    'p3.title': 'Cero residuos en vertederos',
+    'p3.body': 'No enviar residuos de fabricación a vertederos y mantener los materiales en uso durante más tiempo.',
+    'p3.more': 'Para 2030, Intel aspira a cero residuos totales en vertederos y a aplicar estrategias de economía circular al 60 % de sus flujos de residuos de fabricación, en colaboración con sus proveedores.',
+    'cta.more': 'Más información',
+    'modal.close': 'Cerrar',
+    'sub.heading': 'Suscríbete al boletín de sostenibilidad',
+    'sub.body': 'Novedades trimestrales sobre el avance de Intel hacia sus objetivos de 2030. Sin spam; puedes darte de baja cuando quieras.',
+    'sub.name': 'Nombre completo',
+    'sub.email': 'Correo electrónico',
+    'sub.emailHint': 'Solo lo usaremos para enviarte el boletín.',
+    'sub.consent': 'Acepto recibir el boletín de sostenibilidad.',
+    'sub.submit': 'Suscribirme',
+    'sub.nameErr': 'Introduce tu nombre.',
+    'sub.emailErr': 'Introduce un correo electrónico válido, por ejemplo nombre@ejemplo.com.',
+    'sub.consentErr': 'Confirma que deseas recibir el boletín.',
+    'sub.success': '¡Gracias por suscribirte! Esta es una página de demostración, así que no se ha enviado ni guardado nada.',
+    'sub.required': 'Obligatorio'
   },
 
   ja: {
@@ -131,7 +185,34 @@ const TRANSLATIONS = {
     'footer.a': '学習用の課題作品です。節目はインテルが公表した RISE のコミットメントおよび報道発表に基づきます。写真は CC0 および Unsplash ライセンス、インテルのワードマークは Wikimedia Commons 経由のパブリックドメインです。画像ごとのクレジットは次のファイルに記載しています：',
     'footer.b': 'Intel および Intel ロゴは Intel Corporation の商標です。本ページはインテルと提携しておらず、同社の承認を受けたものでもありません。',
     'a11y.progress': 'タイムラインのスクロール位置',
-    'a11y.lang': '言語を選択'
+    'a11y.lang': '言語を選択',
+
+    /* ---- Project 3: commitments, modals, newsletter ---- */
+    'pl.eyebrow': 'RISE 2030 目標',
+    'pl.heading': '10年で果たす3つのコミットメント',
+    'p1.title': '再生可能エネルギー',
+    'p1.body': '2030年までに、世界中のインテルの全拠点を100%再生可能電力でまかないます。',
+    'p1.more': 'インテルの2030年目標は、クリーンな供給と需要の削減を組み合わせています。グローバルな事業全体で100%再生可能電力を使用し、2020年から2030年までに40億キロワット時のエネルギーを節約します。',
+    'p2.title': 'ネット・ポジティブ・ウォーター',
+    'p2.body': 'インテルの事業で使用する以上の淡水を地域社会に還元します。',
+    'p2.more': '半導体製造には大量の超純水が必要です。インテルは2030年までにネット・ポジティブ・ウォーターを目指し、10年間で600億ガロンの水を節約するとともに、事業を行う流域での水源回復プロジェクトを支援します。',
+    'p3.title': '埋め立て廃棄物ゼロ',
+    'p3.body': '製造廃棄物を埋め立て処分せず、資源をより長く活用します。',
+    'p3.more': 'インテルは2030年までに埋め立て廃棄物ゼロを達成し、サプライヤーと協力して製造廃棄物の60%にサーキュラーエコノミーの戦略を適用することを目指しています。',
+    'cta.more': '詳しく見る',
+    'modal.close': '閉じる',
+    'sub.heading': 'サステナビリティ・ニュースレターに登録',
+    'sub.body': '2030年目標に向けたインテルの進捗を四半期ごとにお届けします。迷惑メールは送らず、いつでも配信を停止できます。',
+    'sub.name': '氏名',
+    'sub.email': 'メールアドレス',
+    'sub.emailHint': 'ニュースレターの配信にのみ使用します。',
+    'sub.consent': 'サステナビリティ・ニュースレターの受信に同意します。',
+    'sub.submit': '登録する',
+    'sub.nameErr': '氏名を入力してください。',
+    'sub.emailErr': '有効なメールアドレスを入力してください（例：name@example.com）。',
+    'sub.consentErr': 'ニュースレターの受信に同意してください。',
+    'sub.success': 'ご登録ありがとうございます。これはデモページのため、情報は送信・保存されていません。',
+    'sub.required': '必須'
   },
 
   ar: {
@@ -169,7 +250,34 @@ const TRANSLATIONS = {
     'footer.a': 'عمل دراسي. المحطات مستمدة من التزامات RISE المنشورة من إنتل ومن بياناتها الصحفية. الصور برخصة CC0 ورخصة Unsplash؛ وعلامة إنتل النصية ملكية عامة عبر Wikimedia Commons. وترد اعتمادات كل صورة في',
     'footer.b': 'Intel وشعار Intel علامتان تجاريتان لشركة Intel Corporation — وهذه الصفحة غير تابعة لإنتل ولا مُعتمدة منها.',
     'a11y.progress': 'موضع التمرير في الجدول الزمني',
-    'a11y.lang': 'اختر لغة'
+    'a11y.lang': 'اختر لغة',
+
+    /* ---- Project 3: commitments, modals, newsletter ---- */
+    'pl.eyebrow': 'أهداف RISE لعام 2030',
+    'pl.heading': 'ثلاثة التزامات في عقد واحد',
+    'p1.title': 'الطاقة المتجددة',
+    'p1.body': 'تزويد جميع مواقع إنتل حول العالم بكهرباء متجددة بنسبة 100% بحلول عام 2030.',
+    'p1.more': 'تجمع أهداف إنتل لعام 2030 بين الإمداد النظيف وخفض الطلب: كهرباء متجددة بنسبة 100% في عملياتها العالمية، وتوفير 4 مليارات كيلوواط ساعة من الطاقة بين عامي 2020 و2030.',
+    'p2.title': 'أثر مائي إيجابي صافٍ',
+    'p2.body': 'إعادة كمية من المياه العذبة إلى المجتمعات تفوق ما تستهلكه عمليات إنتل.',
+    'p2.more': 'تتطلب صناعة الرقائق كميات كبيرة من المياه فائقة النقاء. وتهدف إنتل بحلول عام 2030 إلى تحقيق أثر مائي إيجابي صافٍ، من خلال توفير 60 مليار غالون خلال العقد ودعم مشاريع استعادة المياه في الأحواض التي تعمل فيها.',
+    'p3.title': 'صفر نفايات إلى المكبات',
+    'p3.body': 'عدم إرسال أي نفايات تصنيع إلى المكبات، وإبقاء المواد قيد الاستخدام لفترة أطول.',
+    'p3.more': 'تسعى إنتل بحلول عام 2030 إلى عدم إرسال أي نفايات إلى المكبات، وتطبيق استراتيجيات الاقتصاد الدائري على 60% من مسارات نفايات التصنيع بالشراكة مع مورديها.',
+    'cta.more': 'اعرف المزيد',
+    'modal.close': 'إغلاق',
+    'sub.heading': 'اشترك في النشرة الإخبارية للاستدامة',
+    'sub.body': 'تحديثات ربع سنوية حول تقدم إنتل نحو أهداف 2030. لا رسائل مزعجة، ويمكنك إلغاء الاشتراك في أي وقت.',
+    'sub.name': 'الاسم الكامل',
+    'sub.email': 'البريد الإلكتروني',
+    'sub.emailHint': 'سنستخدمه فقط لإرسال النشرة الإخبارية.',
+    'sub.consent': 'أوافق على تلقي النشرة الإخبارية للاستدامة.',
+    'sub.submit': 'اشترك',
+    'sub.nameErr': 'يرجى إدخال اسمك.',
+    'sub.emailErr': 'يرجى إدخال بريد إلكتروني صالح، مثل name@example.com.',
+    'sub.consentErr': 'يرجى تأكيد رغبتك في تلقي النشرة الإخبارية.',
+    'sub.success': 'شكرًا لاشتراكك! هذه صفحة تجريبية، لذا لم يتم إرسال أي بيانات أو حفظها.',
+    'sub.required': 'مطلوب'
   }
 };
 

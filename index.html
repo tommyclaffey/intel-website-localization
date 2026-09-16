@@ -5,7 +5,26 @@
   <!-- Without this, a phone renders the page at ~980px wide and shrinks it.
        Every media query below would be measured against the wrong number. -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Empty inline favicon: stops a 404 on every page load. -->
+  <link rel="icon" href="data:,">
   <title>Intel — Sustainability Through the Ages</title>
+  <!-- Bootstrap BEFORE styles.css, so the site's own rules win every tie.
+
+       id="bootstrap-css" because localize.js swaps this file for Bootstrap's
+       RTL build when the language is Arabic. The two builds are mirror images:
+       the RTL one flips margins, padding, the select arrow, the close button and
+       the form-validation icons. dir="rtl" alone flips flexbox, not those.
+
+       integrity + crossorigin: if the CDN ever serves a different file, the
+       browser refuses to run it. -->
+  <link id="bootstrap-css" rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+        crossorigin="anonymous">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+        integrity="sha384-XGjxtQfXaH2tnPFa9x+ruJTuLE3Aa6LhHSWRr1XeTyhezb4abCG4ccI5AkVDxqC+"
+        crossorigin="anonymous">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -75,120 +94,120 @@
            readers announce "list, 8 items" and the order carries meaning. -->
       <ol class="track">
 
-        <li class="card" tabindex="0">
-          <img class="card__img" data-i18n-alt="c1968.alt" src="assets/1968-founding.jpg" alt="An Intel chip on a circuit board, picked out in colour against black and white">
-          <div class="card__body">
-            <h3 class="card__title">
-            <span class="card__year" data-year="1968">1968</span>
-              <span class="card__name" data-i18n="c1968.name">Intel is founded</span>
+        <li class="tl-card" tabindex="0">
+          <img class="tl-card__img" data-i18n-alt="c1968.alt" src="assets/1968-founding.jpg" alt="An Intel chip on a circuit board, picked out in colour against black and white">
+          <div class="tl-card__body">
+            <h3 class="tl-card__title">
+            <span class="tl-card__year" data-year="1968">1968</span>
+              <span class="tl-card__name" data-i18n="c1968.name">Intel is founded</span>
             </h3>
           </div>
-          <div class="card__reveal">
+          <div class="tl-card__reveal">
             <p data-i18n="c1968.body">Robert Noyce and Gordon Moore found Intel in Mountain View, California,
                beginning a company whose efficiency gains would later shape the energy
                footprint of computing worldwide.</p>
           </div>
         </li>
 
-        <li class="card" tabindex="0">
-          <img class="card__img" data-i18n-alt="c1971.alt" src="assets/1971-first-microprocessor.jpg" alt="Macro photograph of an Intel Core processor seated in its socket">
-          <div class="card__body">
-            <h3 class="card__title">
-            <span class="card__year" data-year="1971">1971</span>
-              <span class="card__name" data-i18n="c1971.name">The first microprocessor</span>
+        <li class="tl-card" tabindex="0">
+          <img class="tl-card__img" data-i18n-alt="c1971.alt" src="assets/1971-first-microprocessor.jpg" alt="Macro photograph of an Intel Core processor seated in its socket">
+          <div class="tl-card__body">
+            <h3 class="tl-card__title">
+            <span class="tl-card__year" data-year="1971">1971</span>
+              <span class="tl-card__name" data-i18n="c1971.name">The first microprocessor</span>
             </h3>
           </div>
-          <div class="card__reveal">
+          <div class="tl-card__reveal">
             <p data-i18n="c1971.body">The Intel 4004 puts a complete CPU on a single chip. Integration is the
                original efficiency story: fewer parts, less material, and far less power
                for the same work.</p>
           </div>
         </li>
 
-        <li class="card" tabindex="0">
-          <img class="card__img" data-i18n-alt="c2007.alt" src="assets/2007-lead-free.jpg" alt="An Intel Core processor at the centre of a blue circuit board">
-          <div class="card__body">
-            <h3 class="card__title">
-            <span class="card__year" data-year="2007">2007</span>
-              <span class="card__name" data-i18n="c2007.name">Lead-free processors</span>
+        <li class="tl-card" tabindex="0">
+          <img class="tl-card__img" data-i18n-alt="c2007.alt" src="assets/2007-lead-free.jpg" alt="An Intel Core processor at the centre of a blue circuit board">
+          <div class="tl-card__body">
+            <h3 class="tl-card__title">
+            <span class="tl-card__year" data-year="2007">2007</span>
+              <span class="tl-card__name" data-i18n="c2007.name">Lead-free processors</span>
             </h3>
           </div>
-          <div class="card__reveal">
+          <div class="tl-card__reveal">
             <p data-i18n="c2007.body">Intel goes 100% lead-free across its entire 45nm processor family,
                removing a hazardous heavy metal from products that ship by the
                hundreds of millions.</p>
           </div>
         </li>
 
-        <li class="card" tabindex="0">
-          <img class="card__img" data-i18n-alt="c2008.alt" src="assets/2008-green-power.jpg" alt="Rows of solar panels in bright sun">
-          <div class="card__body">
-            <h3 class="card__title">
-            <span class="card__year" data-year="2008">2008</span>
-              <span class="card__name" data-i18n="c2008.name">Largest green power buyer</span>
+        <li class="tl-card" tabindex="0">
+          <img class="tl-card__img" data-i18n-alt="c2008.alt" src="assets/2008-green-power.jpg" alt="Rows of solar panels in bright sun">
+          <div class="tl-card__body">
+            <h3 class="tl-card__title">
+            <span class="tl-card__year" data-year="2008">2008</span>
+              <span class="tl-card__name" data-i18n="c2008.name">Largest green power buyer</span>
             </h3>
           </div>
-          <div class="card__reveal">
+          <div class="tl-card__reveal">
             <p data-i18n="c2008.body">Intel becomes the largest voluntary purchaser of green power in the
                United States with a 1.3 billion kilowatt-hour commitment, and holds
                the top spot for years afterwards.</p>
           </div>
         </li>
 
-        <li class="card" tabindex="0">
-          <img class="card__img" data-i18n-alt="c2020.alt" src="assets/2020-rise.jpg" alt="Wind turbines on open land">
-          <div class="card__body">
-            <h3 class="card__title">
-            <span class="card__year" data-year="2020">2020</span>
-              <span class="card__name" data-i18n="c2020.name">The RISE strategy</span>
+        <li class="tl-card" tabindex="0">
+          <img class="tl-card__img" data-i18n-alt="c2020.alt" src="assets/2020-rise.jpg" alt="Wind turbines on open land">
+          <div class="tl-card__body">
+            <h3 class="tl-card__title">
+            <span class="tl-card__year" data-year="2020">2020</span>
+              <span class="tl-card__name" data-i18n="c2020.name">The RISE strategy</span>
             </h3>
           </div>
-          <div class="card__reveal">
+          <div class="tl-card__reveal">
             <p data-i18n="c2020.body">Intel launches RISE &mdash; Responsible, Inclusive, Sustainable, Enabling &mdash;
                setting 2030 goals and committing to use its scale to move the wider
                technology industry, not just its own operations.</p>
           </div>
         </li>
 
-        <li class="card" tabindex="0">
-          <img class="card__img" data-i18n-alt="c2030.alt" src="assets/2030-water.jpg" alt="Aerial view of a water treatment facility">
-          <div class="card__body">
-            <h3 class="card__title">
-            <span class="card__year" data-year="2030">2030</span>
-              <span class="card__name" data-i18n="c2030.name">Net positive water</span>
+        <li class="tl-card" tabindex="0">
+          <img class="tl-card__img" data-i18n-alt="c2030.alt" src="assets/2030-water.jpg" alt="Aerial view of a water treatment facility">
+          <div class="tl-card__body">
+            <h3 class="tl-card__title">
+            <span class="tl-card__year" data-year="2030">2030</span>
+              <span class="tl-card__name" data-i18n="c2030.name">Net positive water</span>
             </h3>
           </div>
-          <div class="card__reveal">
+          <div class="tl-card__reveal">
             <p data-i18n="c2030.body">Goals for the decade: 100% renewable electricity globally, net positive
                water, and zero total waste to landfill. Chip fabrication is water-intensive,
                which is exactly why returning more than is used matters.</p>
           </div>
         </li>
 
-        <li class="card" tabindex="0">
-          <img class="card__img" data-i18n-alt="c2040.alt" src="assets/2040-netzero.jpg" alt="Wind farm at sunset">
-          <div class="card__body">
-            <h3 class="card__title">
-            <span class="card__year" data-year="2040">2040</span>
-              <span class="card__name" data-i18n="c2040.name">Net-zero operations</span>
+        <li class="tl-card" tabindex="0">
+          <img class="tl-card__img" data-i18n-alt="c2040.alt" src="assets/2040-netzero.jpg" alt="Wind farm at sunset">
+          <div class="tl-card__body">
+            <h3 class="tl-card__title">
+            <span class="tl-card__year" data-year="2040">2040</span>
+              <span class="tl-card__name" data-i18n="c2040.name">Net-zero operations</span>
             </h3>
           </div>
-          <div class="card__reveal">
+          <div class="tl-card__reveal">
             <p data-i18n="c2040.body">A commitment to net-zero greenhouse gas emissions across Intel&rsquo;s own
                operations &mdash; Scope 1 and 2 &mdash; covering the factories and the
                electricity that runs them.</p>
           </div>
         </li>
 
-        <li class="card" tabindex="0">
-          <img class="card__img" data-i18n-alt="c2050.alt" src="assets/2050-scope3.jpg" alt="Aerial view of a dense pine forest">
-          <div class="card__body">
-            <h3 class="card__title">
-            <span class="card__year" data-year="2050">2050</span>
-              <span class="card__name" data-i18n="c2050.name">Net-zero value chain</span>
+        <li class="tl-card" tabindex="0">
+          <img class="tl-card__img" data-i18n-alt="c2050.alt" src="assets/2050-scope3.jpg" alt="Aerial view of a dense pine forest">
+          <div class="tl-card__body">
+            <h3 class="tl-card__title">
+            <span class="tl-card__year" data-year="2050">2050</span>
+              <span class="tl-card__name" data-i18n="c2050.name">Net-zero value chain</span>
             </h3>
           </div>
-          <div class="card__reveal">
+          <div class="tl-card__reveal">
             <p data-i18n="c2050.body">The hardest target: net-zero upstream emissions across suppliers and
                materials. Scope 3 is most of a chip company&rsquo;s real footprint, and it
                cannot be reached alone.</p>
@@ -203,17 +222,165 @@
       <!-- A slider role rather than aria-hidden: it is now clickable, so it is
            a control, and a control a screen reader cannot see is a control some
            people simply do not have. -->
-      <div class="progress" role="slider" tabindex="0"
-           data-i18n-aria-label="a11y.progress" aria-label="Timeline scroll position"
+      <div class="tl-progress" role="slider" tabindex="0"
+           data-i18n-aria-label="a11y.tl-progress" aria-label="Timeline scroll position"
            aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
-        <span class="progress__fill"></span>
-        <span class="progress__dot"></span>
+        <span class="tl-progress__fill"></span>
+        <span class="tl-progress__dot"></span>
       </div>
 
       <p class="timeline__hint">
         <span class="hint-desktop" data-i18n="hint.desktop">Scroll or drag the bar to move through time &middot; hover a card for the detail</span>
         <span class="hint-mobile" data-i18n="hint.mobile">Scroll to move through time &middot; tap a card for the detail</span>
       </p>
+    </section>
+
+    <!-- ========================== COMMITMENTS ========================== -->
+    <!-- Bootstrap's grid: one column on phones, three from 768px (col-md-4).
+         g-4 sets the gutter on both axes, so stacked cards still have space
+         between them. h-100 on each card makes all three the same height, so
+         the buttons line up along the bottom whatever the copy length --
+         which matters here, because Spanish runs ~20% longer than English. -->
+    <section class="pillars" aria-labelledby="pillars-heading">
+      <div class="container-xxl">
+        <header class="section-intro">
+          <p class="section-eyebrow" data-i18n="pl.eyebrow">RISE 2030 goals</p>
+          <h2 id="pillars-heading" class="section-heading" data-i18n="pl.heading">Three commitments, one decade</h2>
+        </header>
+        <div class="row g-4">
+          <div class="col-12 col-md-4">
+            <article class="pillar h-100">
+              <!-- The icon is decoration: the heading text already says it. -->
+              <h3 class="pillar__title" id="p1-title">
+                <i class="bi bi-lightning-charge pillar__icon" aria-hidden="true"></i>
+                <span data-i18n="p1.title">Renewable energy</span>
+              </h3>
+              <p class="pillar__body" data-i18n="p1.body">Power every Intel site worldwide with 100% renewable electricity by 2030.</p>
+              <!-- aria-describedby ties the button to its heading, so a screen
+                   reader hears "Learn more, Renewable energy" rather than three
+                   identical "Learn more" buttons with no way to tell them apart. -->
+              <button type="button" class="btn btn-intel pillar__cta"
+                      data-bs-toggle="modal" data-bs-target="#modal-p1"
+                      aria-describedby="p1-title">
+                <span data-i18n="cta.more">Learn more</span>
+                <i class="bi bi-arrow-right btn-intel__arrow" aria-hidden="true"></i>
+              </button>
+            </article>
+          </div>
+          <div class="col-12 col-md-4">
+            <article class="pillar h-100">
+              <!-- The icon is decoration: the heading text already says it. -->
+              <h3 class="pillar__title" id="p2-title">
+                <i class="bi bi-droplet pillar__icon" aria-hidden="true"></i>
+                <span data-i18n="p2.title">Net positive water</span>
+              </h3>
+              <p class="pillar__body" data-i18n="p2.body">Return more fresh water to communities than Intel’s operations consume.</p>
+              <!-- aria-describedby ties the button to its heading, so a screen
+                   reader hears "Learn more, Renewable energy" rather than three
+                   identical "Learn more" buttons with no way to tell them apart. -->
+              <button type="button" class="btn btn-intel pillar__cta"
+                      data-bs-toggle="modal" data-bs-target="#modal-p2"
+                      aria-describedby="p2-title">
+                <span data-i18n="cta.more">Learn more</span>
+                <i class="bi bi-arrow-right btn-intel__arrow" aria-hidden="true"></i>
+              </button>
+            </article>
+          </div>
+          <div class="col-12 col-md-4">
+            <article class="pillar h-100">
+              <!-- The icon is decoration: the heading text already says it. -->
+              <h3 class="pillar__title" id="p3-title">
+                <i class="bi bi-recycle pillar__icon" aria-hidden="true"></i>
+                <span data-i18n="p3.title">Zero waste to landfill</span>
+              </h3>
+              <p class="pillar__body" data-i18n="p3.body">Send no manufacturing waste to landfill, and keep materials in use for longer.</p>
+              <!-- aria-describedby ties the button to its heading, so a screen
+                   reader hears "Learn more, Renewable energy" rather than three
+                   identical "Learn more" buttons with no way to tell them apart. -->
+              <button type="button" class="btn btn-intel pillar__cta"
+                      data-bs-toggle="modal" data-bs-target="#modal-p3"
+                      aria-describedby="p3-title">
+                <span data-i18n="cta.more">Learn more</span>
+                <i class="bi bi-arrow-right btn-intel__arrow" aria-hidden="true"></i>
+              </button>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================== NEWSLETTER =========================== -->
+    <section class="subscribe" aria-labelledby="subscribe-heading">
+      <div class="container-xxl">
+        <div class="subscribe__panel">
+          <div class="row g-4 g-lg-5 align-items-start">
+            <div class="col-12 col-lg-5">
+              <h2 id="subscribe-heading" class="section-heading subscribe__heading" data-i18n="sub.heading">Sign up for the sustainability newsletter</h2>
+              <p id="subscribe-desc" class="subscribe__lead" data-i18n="sub.body">Quarterly updates on Intel’s progress toward its 2030 goals. No spam, and you can unsubscribe at any time.</p>
+            </div>
+
+            <div class="col-12 col-lg-7">
+              <!-- novalidate turns off the browser's own bubbles so subscribe.js
+                   can show messages that are styled, translated and announced.
+                   The `required` and `type="email"` attributes stay: they are
+                   still what the validation checks against. -->
+              <form id="subscribe-form" class="row g-3" novalidate aria-describedby="subscribe-desc">
+
+                <div class="col-12 col-md-6">
+                  <!-- A visible <label for>, never a placeholder standing in for
+                       one: placeholders vanish on typing and are not reliably
+                       read as the field's name. -->
+                  <label for="sub-name" class="form-label">
+                    <span data-i18n="sub.name">Full name</span>
+                    <span class="req" aria-hidden="true">*</span>
+                  </label>
+                  <input type="text" class="form-control" id="sub-name" name="name"
+                         autocomplete="name" required
+                         aria-describedby="sub-name-error">
+                  <div class="invalid-feedback" id="sub-name-error" data-i18n="sub.nameErr">Please enter your name.</div>
+                </div>
+
+                <div class="col-12 col-md-6">
+                  <label for="sub-email" class="form-label">
+                    <span data-i18n="sub.email">Email address</span>
+                    <span class="req" aria-hidden="true">*</span>
+                  </label>
+                  <!-- type="email" brings up the @ keyboard on phones.
+                       autocomplete lets the browser fill it in one tap. -->
+                  <input type="email" class="form-control" id="sub-email" name="email"
+                         autocomplete="email" inputmode="email" required
+                         placeholder="name@example.com"
+                         aria-describedby="sub-email-hint sub-email-error">
+                  <div class="form-text" id="sub-email-hint" data-i18n="sub.emailHint">We’ll only use this to send the newsletter.</div>
+                  <div class="invalid-feedback" id="sub-email-error" data-i18n="sub.emailErr">Please enter a valid email address, like name@example.com.</div>
+                </div>
+
+                <div class="col-12">
+                  <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="sub-consent" name="consent"
+                           required aria-describedby="sub-consent-error">
+                    <label class="form-check-label" for="sub-consent" data-i18n="sub.consent">I agree to receive the sustainability newsletter.</label>
+                    <div class="invalid-feedback" id="sub-consent-error" data-i18n="sub.consentErr">Please confirm you’d like to receive the newsletter.</div>
+                  </div>
+                </div>
+
+                <div class="col-12 subscribe__actions">
+                  <button type="submit" class="btn btn-intel btn-lg">
+                    <span data-i18n="sub.submit">Subscribe</span>
+                  </button>
+                  <p class="subscribe__required"><span aria-hidden="true">* </span><span data-i18n="sub.required">Required</span></p>
+                </div>
+
+                <!-- role="status" is a polite live region: the success message is
+                     read out when it appears, without stealing focus. -->
+                <div class="col-12">
+                  <p id="subscribe-status" class="subscribe__status" role="status" aria-live="polite"></p>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
   </main>
 
@@ -236,9 +403,85 @@
   <!-- ORDER MATTERS. i18n.js defines the dictionary, localize.js consumes it.
        `defer` preserves document order while still not blocking the parser, so
        this reads top to bottom and runs top to bottom. -->
+  <!-- ============================== MODALS ============================== -->
+  <!-- Bootstrap modals (LevelUp). Outside <main> so opening one does not trap
+       focus inside a landmark it belongs to. Bootstrap handles the rest:
+       focus moves in on open, Tab is contained, Esc closes, and focus returns
+       to the "Learn more" button that opened it. -->
+  <div class="modal fade" id="modal-p1" tabindex="-1" aria-labelledby="modal-p1-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="modal-p1-title">
+            <i class="bi bi-lightning-charge pillar__icon" aria-hidden="true"></i>
+            <span data-i18n="p1.title">Renewable energy</span>
+          </h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  data-i18n-aria-label="modal.close" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p data-i18n="p1.more">Intel’s 2030 goals pair clean supply with lower demand: 100% renewable electricity across global operations, and 4 billion kilowatt-hours of energy conserved between 2020 and 2030.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-intel" data-bs-dismiss="modal">
+            <span data-i18n="modal.close">Close</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-p2" tabindex="-1" aria-labelledby="modal-p2-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="modal-p2-title">
+            <i class="bi bi-droplet pillar__icon" aria-hidden="true"></i>
+            <span data-i18n="p2.title">Net positive water</span>
+          </h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  data-i18n-aria-label="modal.close" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p data-i18n="p2.more">Chipmaking needs large volumes of ultra-pure water. Intel’s goal for 2030 is net positive water — conserving 60 billion gallons over the decade and funding restoration projects in the watersheds where it operates.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-intel" data-bs-dismiss="modal">
+            <span data-i18n="modal.close">Close</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="modal fade" id="modal-p3" tabindex="-1" aria-labelledby="modal-p3-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title h5" id="modal-p3-title">
+            <i class="bi bi-recycle pillar__icon" aria-hidden="true"></i>
+            <span data-i18n="p3.title">Zero waste to landfill</span>
+          </h2>
+          <button type="button" class="btn-close" data-bs-dismiss="modal"
+                  data-i18n-aria-label="modal.close" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p data-i18n="p3.more">By 2030 Intel aims for zero total waste to landfill, and to apply circular economy strategies to 60% of its manufacturing waste streams in partnership with suppliers.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-intel" data-bs-dismiss="modal">
+            <span data-i18n="modal.close">Close</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+          crossorigin="anonymous" defer></script>
   <script src="i18n.js" defer></script>
   <script src="localize.js" defer></script>
   <script src="script.js" defer></script>
+  <script src="subscribe.js" defer></script>
 
 </body>
 </html>

@@ -7,16 +7,16 @@
   'use strict';
 
   const track = document.querySelector('.track');
-  const rail  = document.querySelector('.progress');
-  const fill  = document.querySelector('.progress__fill');
-  const dot   = document.querySelector('.progress__dot');
+  const rail  = document.querySelector('.tl-progress');
+  const fill  = document.querySelector('.tl-progress__fill');
+  const dot   = document.querySelector('.tl-progress__dot');
   const root  = document.documentElement;
 
   // If any piece is missing, do nothing. A half-wired progress bar is worse
   // than none, and a null here would throw and take the rest of the file down.
   if (!track || !rail || !fill || !dot) return;
 
-  const cards = Array.prototype.slice.call(document.querySelectorAll('.card'));
+  const cards = Array.prototype.slice.call(document.querySelectorAll('.tl-card'));
 
   /* ⚠️ Which card is "active" is DERIVED from geometry, not remembered from a
      mouseenter event.

@@ -19,6 +19,12 @@
    * silently overrule someone who picked Spanish on a machine set to English.
    */
   function initialLang() {
+    /* ?lang=ar in the URL beats everything. It is the only way to SHARE a
+       specific language -- "send the Arabic version to the Dubai team" is a
+       link, not a set of instructions for using the dropdown. */
+    const param = new URLSearchParams(window.location.search).get('lang');
+    if (param && TRANSLATIONS[param.toLowerCase()]) return param.toLowerCase();
+
     let saved = null;
     try { saved = localStorage.getItem(STORAGE_KEY); } catch (e) { /* private mode */ }
     if (saved && TRANSLATIONS[saved]) return saved;
@@ -34,7 +40,40 @@
     return DEFAULT_LANG;
   }
 
-  const isRTL = (lang) => RTL_LANGS.indexOf(lang) !== -1;
+  const isRTL = (lang) => RTL_LANGS.indexOf(String(lang).toLowerCase().split('-')[0]) !== -1;
+
+  /* ---- Bootstrap has two builds, and direction decides which one loads ----
+
+     dir="rtl" flips flexbox and text alignment for free. It does NOT flip the
+     physical left/right values Bootstrap is full of -- form-check padding, the
+     select arrow, the close button, the validation icons. Bootstrap ships a
+     mirrored RTL build for exactly that, so the stylesheet is swapped rather
+     than patched.
+
+     integrity is set BEFORE href. The browser checks the hash against the file
+     it is about to load; set href first and it fetches the RTL file while the
+     LTR hash is still on the element, and refuses it. */
+  const BOOTSTRAP = {
+    ltr: {
+      href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css',
+      integrity: 'sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH'
+    },
+    rtl: {
+      href: 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css',
+      integrity: 'sha384-dpuaG1suU0eT09tx5plTaGMLBsfDLzUCCUXOY2j/LSvXYuG6Bqs43ALlhIqAJVRb'
+    }
+  };
+
+  function applyDirection(dir) {
+    const root = document.documentElement;
+    if (root.getAttribute('dir') !== dir) root.setAttribute('dir', dir);
+
+    const link = document.getElementById('bootstrap-css');
+    if (link && link.getAttribute('href') !== BOOTSTRAP[dir].href) {
+      link.setAttribute('integrity', BOOTSTRAP[dir].integrity);
+      link.setAttribute('href', BOOTSTRAP[dir].href);
+    }
+  }
 
   function apply(lang) {
     const dict = TRANSLATIONS[lang] || TRANSLATIONS[DEFAULT_LANG];
@@ -48,7 +87,7 @@
        `dir` is what flips the layout. They are separate concerns and setting
        only one is the classic half-done localization. */
     root.setAttribute('lang', lang);
-    root.setAttribute('dir', dir);
+    applyDirection(dir);
 
     document.title = dict['doc.title'];
 
@@ -83,6 +122,10 @@
 
     try { localStorage.setItem(STORAGE_KEY, lang); } catch (e) { /* ignore */ }
 
+    // Keep the dropdown honest if the language changed some other way.
+    const select = document.getElementById('lang-select');
+    if (select && select.value !== lang) select.value = lang;
+
     /* script.js owns the progress rail and has to recompute after a direction
        change — every measurement in it is horizontal. An event rather than a
        direct call, so neither file has to import the other. */
@@ -114,4 +157,28 @@
   const lang = initialLang();
   if (select) select.value = lang;
   apply(lang);
+
+  /* ---- Auto-detect: watch <html lang> and follow it (LevelUp) ----
+
+     The dropdown is not the only thing that can change the page's language.
+     Browser translation (Chrome's "Translate to Arabic") rewrites the lang
+     attribute on <html> and nothing else -- the text turns Arabic while the
+     layout stays left-to-right.
+
+     A MutationObserver watches that one attribute. Whenever it changes, by
+     anything, direction is recomputed from it. The page's layout follows the
+     language it is actually in, not the language it was last told. */
+  let lastLang = document.documentElement.getAttribute('lang');
+  new MutationObserver(function () {
+    const root = document.documentElement;
+    const current = root.getAttribute('lang') || DEFAULT_LANG;
+    if (current === lastLang) return;
+    lastLang = current;
+
+    const dir = isRTL(current) ? 'rtl' : 'ltr';
+    applyDirection(dir);
+    document.dispatchEvent(new CustomEvent('languagechange', {
+      detail: { lang: current, dir: dir }
+    }));
+  }).observe(document.documentElement, { attributes: true, attributeFilter: ['lang'] });
 })();

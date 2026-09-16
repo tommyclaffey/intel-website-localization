@@ -379,7 +379,7 @@ body {
 
 /* ---- The card ---- */
 
-.card {
+.tl-card {
   position: relative;
   flex: 0 0 300px;        /* fixed width, no growing or shrinking */
   scroll-snap-align: start;
@@ -412,7 +412,7 @@ body {
 
 }
 
-.card__img {
+.tl-card__img {
   display: block;
   width: 100%;
   height: 190px;
@@ -420,7 +420,7 @@ body {
   border-radius: var(--radius) var(--radius) 0 0;   /* was the parent's job */
 }
 
-.card__body { padding: var(--space-4) var(--space-4) var(--space-6); }
+.tl-card__body { padding: var(--space-4) var(--space-4) var(--space-6); }
 
 /* ONE heading per card, holding both the year and the name.
 
@@ -430,7 +430,7 @@ body {
    to put it inside the heading where that size is honest. A screen reader now
    announces "1968, Intel is founded" as one heading, which is what a timeline
    entry actually is. */
-.card__title {
+.tl-card__title {
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -438,7 +438,7 @@ body {
   font-weight: 600;
 }
 
-.card__year {
+.tl-card__year {
   font-size: var(--t-year);
   font-weight: 700;
   line-height: 1;
@@ -449,7 +449,7 @@ body {
   font-variant-numeric: tabular-nums lining-nums;
 }
 
-.card__name {
+.tl-card__name {
   font-size: var(--t-h3);
   font-weight: 600;
   line-height: 1.35;
@@ -458,7 +458,7 @@ body {
 
 /* ---- The reveal ---- */
 
-.card__reveal {
+.tl-card__reveal {
   /* Covers the whole card and sits above it. Hidden by opacity rather than
      display:none so it can be TRANSITIONED — display cannot animate. */
   position: absolute;
@@ -479,7 +479,7 @@ body {
   transition: opacity .28s ease, transform .28s ease;
 }
 
-.card__reveal p { margin: 0; font-size: var(--t-body); line-height: 1.55; }
+.tl-card__reveal p { margin: 0; font-size: var(--t-body); line-height: 1.55; }
 
 /* ⚠️ :focus-within alone did NOT work here, and it is worth knowing why: it
    fires when a focusable DESCENDANT is focused, and these cards contain only
@@ -489,26 +489,26 @@ body {
    Fixed at the markup end -- each card carries tabindex="0" -- so the card
    itself is the thing that receives focus. :focus-visible rather than :focus,
    so a mouse click does not leave a focus ring behind. */
-.card:hover,
-.card.is-active,
-.card:focus-visible,
-.card:focus-within {
+.tl-card:hover,
+.tl-card.is-active,
+.tl-card:focus-visible,
+.tl-card:focus-within {
   transform: translateY(-8px) scale(1.02);
   box-shadow: var(--shadow-lift);
   border-color: var(--intel-blue);
   background-size: 100% 4px;     /* the accent rule draws itself in */
 }
-.card:hover .card__reveal,
-.card.is-active .card__reveal,
-.card:focus-visible .card__reveal,
-.card:focus-within .card__reveal {
+.tl-card:hover .tl-card__reveal,
+.tl-card.is-active .tl-card__reveal,
+.tl-card:focus-visible .tl-card__reveal,
+.tl-card:focus-within .tl-card__reveal {
   opacity: 1;
   transform: translateY(0);
 }
 
 /* A real focus ring. Removing the outline without replacing it is the single
    most common accessibility regression in CSS; this replaces it deliberately. */
-.card:focus-visible {
+.tl-card:focus-visible {
   outline: 3px solid var(--intel-light);
   outline-offset: 3px;
 }
@@ -628,17 +628,17 @@ body {
     padding: 0;
   }
 
-  .card {
+  .tl-card {
     flex: 1 1 auto;            /* full width of the column */
     width: 100%;
   }
 
-  .card__img { height: 200px; }
+  .tl-card__img { height: 200px; }
 
   /* On a touch screen there is no hover, so a hover-only reveal would hide
      this content permanently. Shown inline instead: still styled, still
      branded, but no longer conditional on a pointer that does not exist. */
-  .card__reveal {
+  .tl-card__reveal {
     position: static;
     opacity: 1;
     transform: none;
@@ -646,10 +646,10 @@ body {
     padding: var(--space-4);
   }
 
-  .card:hover,
-  .card.is-active,
-  .card:focus-visible,
-  .card:focus-within { transform: none; box-shadow: var(--shadow-rest); }
+  .tl-card:hover,
+  .tl-card.is-active,
+  .tl-card:focus-visible,
+  .tl-card:focus-within { transform: none; box-shadow: var(--shadow-rest); }
 
   .hint-desktop { display: none; }
   .hint-mobile  { display: inline; }
@@ -680,8 +680,8 @@ body {
 /* Some people get motion sick from transforms. The reveal still works; it
    just stops moving. */
 @media (prefers-reduced-motion: reduce) {
-  .card, .card__reveal { transition: none; }
-  .card:hover, .card.is-active, .card:focus-within { transform: none; }
+  .tl-card, .tl-card__reveal { transition: none; }
+  .tl-card:hover, .tl-card.is-active, .tl-card:focus-within { transform: none; }
 }
 
 /* ===================== SCROLL PROGRESS (pure CSS) =====================
@@ -698,7 +698,7 @@ body {
    The script owns POSITION only. Every colour, size and transition stays
    here, so the rail can be restyled without touching the logic. */
 
-.progress {
+.tl-progress {
   position: relative;
   max-width: 1400px;
   /* No top margin: the track's own bottom padding, which exists to keep the
@@ -715,7 +715,7 @@ body {
   display: none;
 }
 
-.progress__fill {
+.tl-progress__fill {
   position: absolute;
   inset: 0 auto 0 0;
   width: 0%;
@@ -723,7 +723,7 @@ body {
   background: linear-gradient(90deg, var(--intel-light), var(--intel-blue));
 }
 
-.progress__dot {
+.tl-progress__dot {
   position: absolute;
   top: 50%;
   left: 0%;
@@ -739,14 +739,14 @@ body {
    a progress rail for content that already fits is a control reporting on
    nothing. The class is added by JS rather than the rail being visible by
    default, so if the script fails to load nothing broken is left on screen. */
-.progress.is-active { display: block; }
+.tl-progress.is-active { display: block; }
 
 /* The travel itself is set by script.js as inline width/left. Transitioned so
    a programmatic jump (clicking the rail) glides instead of teleporting, while
    ordinary scrolling still tracks the finger 1:1 -- the transition is short
    enough to be invisible during a drag. */
-.progress__fill,
-.progress__dot {
+.tl-progress__fill,
+.tl-progress__dot {
   /* ⚠️ width and left MUST share a duration and easing curve.
 
      The dot sits at the fill's leading edge, so if they animate at different
@@ -758,8 +758,8 @@ body {
 }
 
 /* The rail is dragged, so it says so — grab, then grabbing while held. */
-.progress { cursor: grab; user-select: none; -webkit-user-select: none; }
-.progress.is-dragging { cursor: grabbing; }
+.tl-progress { cursor: grab; user-select: none; -webkit-user-select: none; }
+.tl-progress.is-dragging { cursor: grabbing; }
 
 /* Snap off while dragging. `proximity` pulls every programmatic scroll toward
    the nearest card, so a drag could only ever land on a snap point -- it read
@@ -787,9 +787,9 @@ body {
    bar would have vanished -- while `inset: 0` on the fill resolves against the
    PADDING box, so the fill would have grown to 26px tall at the same moment.
    A pseudo-element extends the catchable area without entering the box model. */
-.progress { touch-action: none; }
+.tl-progress { touch-action: none; }
 
-.progress::before {
+.tl-progress::before {
   content: "";
   position: absolute;
   inset: -10px 0;        /* 10px of reach above and below, invisible */
@@ -798,9 +798,9 @@ body {
 /* During a drag the dot must sit exactly under the finger. The 0.18s ease that
    makes a click glide would make a drag lag behind by a fifth of a second,
    which reads as the bar being broken rather than as easing. */
-.progress.is-dragging .progress__fill,
-.progress.is-dragging .progress__dot { transition: none; }
-.progress:focus-visible {
+.tl-progress.is-dragging .tl-progress__fill,
+.tl-progress.is-dragging .tl-progress__dot { transition: none; }
+.tl-progress:focus-visible {
   outline: 3px solid var(--intel-light);
   outline-offset: 4px;
 }
@@ -809,7 +809,7 @@ body {
 @media (max-width: 768px) {
   /* ⚠️ BOTH selectors, and the second is the one that matters.
 
-     `.progress.is-active { display: block }` is two classes; `.progress` is
+     `.tl-progress.is-active { display: block }` is two classes; `.tl-progress` is
      one, and a media query adds no specificity of its own. So this rule LOST
      to it, and the rail stayed visible on mobile whenever the class happened
      to be on the element.
@@ -817,20 +817,20 @@ body {
      It looked fine only because the script removes `is-active` when nothing can
      scroll -- so a stylesheet rule that does not work was masked by JavaScript
      that does. Matching the specificity makes the CSS true on its own. */
-  .progress,
-  .progress.is-active { display: none; }
+  .tl-progress,
+  .tl-progress.is-active { display: none; }
 }
 
 /* The dot is motion tied to scrolling, which is exactly the pairing that
    causes trouble for people sensitive to it. */
 @media (prefers-reduced-motion: reduce) {
-  .progress__fill, .progress__dot { transition: none; }
+  .tl-progress__fill, .tl-progress__dot { transition: none; }
 }
 
 /* Pointing at a hovered card rather than reporting scroll position. Lit in the
    accent so it reads as "this one" rather than as the ordinary position dot.
    The dot already transitions left, so moving it to the card glides. */
-.progress__dot.is-pointing {
+.tl-progress__dot.is-pointing {
   background: var(--intel-light);
   border-color: var(--surface);
   transform: scale(1.25);
@@ -928,7 +928,7 @@ body {
   scroll-padding-inline-start: var(--space-6);
 }
 
-.progress__fill {
+.tl-progress__fill {
   /* was inset: 0 auto 0 0 -- anchored to the physical left edge */
   inset: auto;
   inset-block: 0;
@@ -936,7 +936,7 @@ body {
   inset-inline-end: auto;
 }
 
-.progress__dot {
+.tl-progress__dot {
   /* was left: 0% with margin: -8px 0 0 -8px */
   left: auto;
   inset-inline-start: 0%;
@@ -948,8 +948,8 @@ body {
 /* script.js now writes inset-inline-start instead of left, so the transition
    has to name the property that actually changes -- otherwise the dot
    teleports while the fill behind it eases, and they come apart. */
-.progress__fill,
-.progress__dot {
+.tl-progress__fill,
+.tl-progress__dot {
   transition: width .18s ease, inset-inline-start .18s ease,
               transform .18s ease, background .18s ease;
 }
@@ -973,7 +973,7 @@ body {
    them would have touched script.js, this file and the markup to change
    nothing a user can see. */
 
-[dir="rtl"] .progress__fill {
+[dir="rtl"] .tl-progress__fill {
   background: linear-gradient(270deg, var(--intel-light), var(--intel-blue));
 }
 
@@ -997,9 +997,241 @@ body {
    same size, so the tight display leading clips. Only the leading changes --
    the type scale itself is shared, so the hierarchy stays identical. */
 :root[lang="ar"] .hero__title { line-height: 1.25; }
-:root[lang="ar"] .card__reveal p { line-height: 1.8; }
+:root[lang="ar"] .tl-card__reveal p { line-height: 1.8; }
 
 /* Japanese has no spaces, so overflow-wrap: break-word never fires and a long
    run cannot break. strict keeps it off the characters that may not start or
    end a line. */
 :root[lang="ja"] { line-break: strict; word-break: normal; }
+
+
+/* ========================================================================
+   PROJECT 3 — Bootstrap sections: commitments, newsletter, modals
+   ========================================================================
+
+   Bootstrap supplies the grid, the form controls and the modal behaviour.
+   Everything VISUAL is still this file's tokens -- Bootstrap's own blue
+   (#0D6EFD) never appears, because a page that is Intel blue until the
+   form, and Bootstrap blue after it, reads as two sites stitched together. */
+
+/* Bootstrap reboot sets h1–h6 to weight 500 and its own font stack. Put the
+   site's type back so the new sections match the ones above them. */
+body { font-family: var(--font); color: var(--ink); line-height: 1.55; }
+h1, h2, h3 { font-family: var(--font); }
+
+/* Bootstrap's variables, pointed at Intel's. Anything Bootstrap draws --
+   focus glow, checkbox fill, links -- now uses the brand colour. */
+:root {
+  --bs-body-font-family: var(--font);
+  --bs-body-color: var(--ink);
+  --bs-body-bg: var(--surface-page);
+  --bs-primary: var(--intel-blue);
+  --bs-primary-rgb: 0, 104, 181;
+  --bs-link-color: var(--intel-blue);
+  --bs-link-hover-color: var(--intel-deep);
+  --bs-border-color: #C9CFD8;
+  --bs-form-invalid-color: #B42318;        /* 6.2:1 on white — Bootstrap's default red is 4.0:1 */
+  --bs-form-invalid-border-color: #B42318;
+}
+
+/* ---- Language bar: was white text on a light grey page (≈1.1:1) ---- */
+.langbar__select {
+  color: var(--ink);
+  background: var(--surface);
+  border-color: var(--bs-border-color);
+}
+.langbar__select:hover { background: var(--surface); border-color: var(--intel-blue); }
+.langbar__select:focus-visible { outline-color: var(--intel-blue); }
+
+/* ---- Shared section intro ---- */
+.pillars, .subscribe { padding: var(--space-16) 0; }
+.pillars { border-top: 1px solid var(--border); }
+.subscribe { padding-top: 0; }
+
+/* container-xxl is Bootstrap's; the padding matches the timeline's 24px edge
+   so all three sections share one left (or, in Arabic, right) edge. */
+.pillars .container-xxl,
+.subscribe .container-xxl { max-width: calc(1400px + var(--space-6) * 2); padding-inline: var(--space-6); }
+
+.section-intro { margin-bottom: var(--space-8); }
+.section-eyebrow {
+  margin: 0 0 var(--space-3);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: var(--intel-blue);
+}
+.section-heading {
+  margin: 0;
+  font-size: var(--t-h2);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--intel-deep);
+}
+
+/* ---- The three columns ---- */
+
+/* Flex column + margin-top:auto on the button: the button sits on the card's
+   bottom edge. With h-100 making every card equal height, the three buttons
+   align in one row regardless of how long each language's copy runs. */
+.pillar {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-8);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-rest);
+}
+
+.pillar__title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--intel-deep);
+}
+
+/* A tinted square behind the icon gives all three the same footprint, so a
+   wide glyph (recycle) and a narrow one (droplet) still line up. */
+.pillar__icon {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  font-size: 1.35rem;
+  color: var(--intel-blue);
+  background: #E6F0F8;
+}
+
+.pillar__body { margin: 0; color: var(--ink-soft); }
+.pillar__cta { margin-top: auto; }
+
+/* ---- One button style, used everywhere ----
+
+   #0068B5 with white text is 5.9:1, past AA for normal text. Hover goes
+   DARKER rather than lighter so contrast only ever improves on interaction. */
+.btn-intel {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--intel-blue);
+  --bs-btn-border-color: var(--intel-blue);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--intel-deep);
+  --bs-btn-hover-border-color: var(--intel-deep);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--intel-night);
+  --bs-btn-active-border-color: var(--intel-night);
+  --bs-btn-font-weight: 600;
+  --bs-btn-padding-x: 1.125rem;
+  --bs-btn-padding-y: .625rem;
+  --bs-btn-border-radius: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 44px;                 /* touch target */
+}
+
+/* A visible ring, not Bootstrap's faint glow. Two-tone so it shows on both
+   the white card and the blue button itself. */
+.btn-intel:focus-visible,
+.form-control:focus,
+.form-check-input:focus,
+.btn-close:focus-visible {
+  outline: 3px solid var(--intel-light);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--intel-deep);
+}
+
+.btn-intel__arrow { transition: transform .2s ease; }
+.btn-intel:hover .btn-intel__arrow { transform: translateX(3px); }
+
+/* The arrow points the way you read. In Arabic "forward" is left. */
+[dir="rtl"] .btn-intel__arrow { transform: scaleX(-1); }
+[dir="rtl"] .btn-intel:hover .btn-intel__arrow { transform: scaleX(-1) translateX(3px); }
+
+/* ---- Newsletter ---- */
+.subscribe__panel {
+  padding: clamp(var(--space-6), 5vw, var(--space-12));
+  color: #fff;
+  background: linear-gradient(135deg, var(--intel-blue) 0%, var(--intel-deep) 60%, var(--intel-night) 100%);
+  border-radius: var(--radius);
+}
+.subscribe__heading { color: #fff; max-width: 16ch; }
+.subscribe__lead { margin: var(--space-4) 0 0; color: #DCE8F5; }   /* 9.8:1 on the darkest stop, 5.2:1 on the lightest */
+
+.subscribe .form-label { font-weight: 600; color: #fff; }
+.subscribe .req { color: var(--intel-light); }
+.subscribe .form-text { color: #DCE8F5; }
+
+.subscribe .form-control {
+  min-height: 48px;
+  color: var(--ink);
+  background-color: #fff;
+  border-color: transparent;
+}
+
+.subscribe .form-check-label { color: #fff; }
+.subscribe .form-check-input { width: 1.25em; height: 1.25em; margin-top: .15em; }
+.subscribe .form-check-input:checked { background-color: var(--intel-light); border-color: var(--intel-light); }
+
+/* Error text sits on the dark panel, so it needs a LIGHT red, not a dark one.
+   An icon is added so the error is not colour-only. */
+.subscribe .invalid-feedback {
+  color: #FFD5D0;
+  font-weight: 600;
+}
+.subscribe .invalid-feedback::before { content: "⚠ "; }
+.subscribe .form-control.is-invalid { border: 2px solid #FF8A80; }
+.subscribe .form-check-input.is-invalid { border: 2px solid #FF8A80; }
+.subscribe .form-check-input.is-invalid ~ .form-check-label { color: #fff; }
+
+.subscribe__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+}
+.subscribe .btn-intel {
+  --bs-btn-color: var(--intel-night);
+  --bs-btn-bg: #fff;
+  --bs-btn-border-color: #fff;
+  --bs-btn-hover-color: var(--intel-night);
+  --bs-btn-hover-bg: #D9F6FF;
+  --bs-btn-hover-border-color: #D9F6FF;
+  --bs-btn-active-color: var(--intel-night);
+  --bs-btn-active-bg: #BDEFFF;
+}
+.subscribe__required { margin: 0; font-size: var(--t-small); color: #DCE8F5; }
+
+.subscribe__status { margin: 0; min-height: 1.5em; font-weight: 600; }
+.subscribe__status.is-success::before { content: "✓ "; color: var(--intel-light); }
+
+/* Email addresses are always left-to-right, even inside an Arabic form. */
+[dir="rtl"] .subscribe input[type="email"] { direction: ltr; text-align: right; }
+[dir="rtl"] .subscribe input[type="email"]::placeholder { text-align: right; }
+
+/* ---- Modals ---- */
+.modal-content { border: 0; border-radius: var(--radius); box-shadow: var(--shadow-lift); }
+.modal-title {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-weight: 700;
+  color: var(--intel-deep);
+}
+.modal-title .pillar__icon { width: 36px; height: 36px; font-size: 1.1rem; }
+.modal-body { color: var(--ink-soft); line-height: 1.7; }
+.modal-body p { margin: 0; }
+:root[lang="ar"] .modal-body { line-height: 1.9; }
+
+/* ---- Contrast fixes surfaced by Lighthouse ---- */
+.footer { color: var(--ink-soft); }

@@ -5,7 +5,8 @@ of Intel's sustainability milestones, **localized into four languages** — Engl
 Spanish, Japanese and Arabic — including full right-to-left support.
 
 The timeline itself is Project 2. This repo adds the localization layer on top of
-it. The interesting work is not the translation; it is everything the translation
+it, plus a Bootstrap three-column commitments section, modals, and an accessible
+newsletter form. The interesting work is not the translation; it is everything the translation
 breaks.
 
 ---
@@ -159,14 +160,56 @@ loses its name.
 
 ---
 
-## How it meets the brief
+## Project 3 rubric — where each point is earned
+
+| Criterion | Pts | Where |
+|---|---|---|
+| **RTL adaptation** | 15 | `dir="rtl"` + Bootstrap's **RTL build swapped in** (`localize.js → applyDirection`) + logical CSS properties + 8 RTL fixes in `script.js`. Try `?lang=ar` |
+| **Responsive three-column section** | 10 | `.pillars` — Bootstrap `row g-4` / `col-12 col-md-4`, Bootstrap Icons in every `<h3>`, one `.btn-intel` "Learn more" style on all three |
+| **Subscription form + footer** | 10 | `.subscribe` — styled Bootstrap form, validated by `subscribe.js`; footer below it |
+| **Accessibility (Lighthouse ≥ 90)** | 15 | **100** in English, **100** in Arabic, **100** on mobile (Lighthouse 12). Labels, `aria-invalid`, errors tied with `aria-describedby`, live-region confirmation, contrast fixed |
+| **LevelUp — auto-detect language** | +10 | Opens in the browser's language (`navigator.languages`), and a `MutationObserver` on `<html lang>` re-applies RTL whenever the language changes by any route |
+| **LevelUp — Bootstrap component** | +10 | Three **modals** behind the "Learn more" buttons — focus moves in, Esc closes, focus returns |
+| Reflections (×3) | 30 | In the submission document, not the repo |
+
+### Project 3 decisions worth explaining
+
+**Two classes were renamed to survive Bootstrap.** The timeline used `.card` and
+`.progress`, which are both Bootstrap components. Loading Bootstrap gave every
+milestone a border and turned the scroll rail into a 16px grey bar. They are now
+`.tl-card` and `.tl-progress`. A name collision is the most common way adding a
+framework to an existing site breaks it.
+
+**Bootstrap has two stylesheets, and the page swaps between them.** `dir="rtl"`
+flips flexbox for free, but Bootstrap is full of physical `left`/`right` values —
+checkbox padding, the modal close button, the validation icons. The RTL build is
+the mirror image. `integrity` is set *before* `href`, or the browser checks the RTL
+file against the LTR hash and refuses it.
+
+**The language bar failed contrast before any of this started.** White text on
+the light grey page, roughly 1.1:1. Lighthouse would have flagged it; it is fixed.
+
+**Three identical "Learn more" buttons are told apart by `aria-describedby`.** Each
+points at its card's heading, so a screen reader hears "Learn more, Net positive
+water" instead of the same two words three times.
+
+**The form is honest.** There is no backend, so the confirmation says the page is
+a demo and nothing was sent. Email fields stay left-to-right even in Arabic,
+because an address is not Arabic text.
+
+**`?lang=ar` in the URL** opens a specific language — the only way to *share* the
+Arabic version with a global team is a link.
+
+---
+
+## How it meets the brief (Project 2)
 
 | Requirement | Where |
 |---|---|
 | Horizontal on large screens | `.track` is `display:flex; flex-wrap:nowrap; overflow-x:auto` |
 | Stacks vertically on small screens | `@media (max-width: 768px)` flips it to `flex-direction: column` |
 | Two breakpoints, not one | The hero stacks at **1024px**, the timeline at **768px** — they fail at different widths |
-| Hover reveals detail | `.card__reveal` is `opacity:0` → `1` on `:hover` **and `:focus-within`** |
+| Hover reveals detail | `.tl-card__reveal` is `opacity:0` → `1` on `:hover` **and `:focus-within`** |
 | Intel-branded styling | Tokens at the top of `styles.css` — `#0068B5`, `#00285A`, `#00C7FD` |
 | Image on every card | 8 cards, 8 images, all with real `alt` text |
 | **LevelUp — scroll snap** | `scroll-snap-type: x mandatory` + `scroll-snap-align: start` |
