@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- Without this, a phone renders the page at ~980px wide and shrinks it.
+       Every media query below would be measured against the wrong number. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Intel — Sustainability Through the Ages</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- ============================== HERO ============================== -->
+  <header class="hero">
+    <div class="hero__inner">
+      <div class="hero__copy">
+      <!-- Intel's official mark, not a text approximation.
+
+           Public domain: a wordmark in a plain typeface sits below the
+           threshold of originality, so the FILE carries no copyright. The
+           trademark is still Intel's, which is fine here -- this page is about
+           Intel, which is exactly what nominative use means.
+
+           SVG, so it stays sharp at any size and on any display. The white
+           wordmark with the cyan accent is Intel's own on-dark treatment,
+           derived from the 2023 file rather than invented. -->
+      <img class="hero__logo" src="assets/intel-logo-white.svg" alt="Intel" width="240" height="88">
+
+      <h1 class="hero__title">Sustainability through the ages</h1>
+
+      <span class="hero__rule" aria-hidden="true"></span>
+
+      <p class="hero__sub">
+        Explore Intel&rsquo;s journey through time &mdash; from its founding to a
+        net-zero future &mdash; and how a commitment to innovation has shaped a
+        more sustainable path for technology and the planet.
+      </p>
+      </div>
+
+      <!-- alt="" because the image is illustrative, not informational: the
+           headline and subhead already say everything it conveys. An empty alt
+           tells a screen reader to skip it; LEAVING IT OUT would make the
+           reader announce the filename instead. -->
+      <div class="hero__art">
+        <img src="assets/hero-wind.jpg" alt="" width="1800" height="1200">
+      </div>
+    </div>
+  </header>
+
+  <!-- ============================ TIMELINE ============================ -->
+  <main>
+    <section class="timeline" aria-labelledby="timeline-heading">
+      <header class="timeline__intro">
+        <p class="timeline__eyebrow">1968 &mdash; 2050</p>
+        <h2 id="timeline-heading" class="timeline__heading">Six decades of milestones</h2>
+      </header>
+
+      <!-- An ordered list, because a timeline IS an ordered list. Screen
+           readers announce "list, 8 items" and the order carries meaning. -->
+      <ol class="track">
+
+        <li class="card" tabindex="0">
+          <img class="card__img" src="assets/1968-founding.jpg" alt="An Intel chip on a circuit board, picked out in colour against black and white">
+          <div class="card__body">
+            <h3 class="card__title">
+            <span class="card__year">1968</span>
+              <span class="card__name">Intel is founded</span>
+            </h3>
+          </div>
+          <div class="card__reveal">
+            <p>Robert Noyce and Gordon Moore found Intel in Mountain View, California,
+               beginning a company whose efficiency gains would later shape the energy
+               footprint of computing worldwide.</p>
+          </div>
+        </li>
+
+        <li class="card" tabindex="0">
+          <img class="card__img" src="assets/1971-first-microprocessor.jpg" alt="Macro photograph of an Intel Core processor seated in its socket">
+          <div class="card__body">
+            <h3 class="card__title">
+            <span class="card__year">1971</span>
+              <span class="card__name">The first microprocessor</span>
+            </h3>
+          </div>
+          <div class="card__reveal">
+            <p>The Intel 4004 puts a complete CPU on a single chip. Integration is the
+               original efficiency story: fewer parts, less material, and far less power
+               for the same work.</p>
+          </div>
+        </li>
+
+        <li class="card" tabindex="0">
+          <img class="card__img" src="assets/2007-lead-free.jpg" alt="An Intel Core processor at the centre of a blue circuit board">
+          <div class="card__body">
+            <h3 class="card__title">
+            <span class="card__year">2007</span>
+              <span class="card__name">Lead-free processors</span>
+            </h3>
+          </div>
+          <div class="card__reveal">
+            <p>Intel goes 100% lead-free across its entire 45nm processor family,
+               removing a hazardous heavy metal from products that ship by the
+               hundreds of millions.</p>
+          </div>
+        </li>
+
+        <li class="card" tabindex="0">
+          <img class="card__img" src="assets/2008-green-power.jpg" alt="Rows of solar panels in bright sun">
+          <div class="card__body">
+            <h3 class="card__title">
+            <span class="card__year">2008</span>
+              <span class="card__name">Largest green power buyer</span>
+            </h3>
+          </div>
+          <div class="card__reveal">
+            <p>Intel becomes the largest voluntary purchaser of green power in the
+               United States with a 1.3 billion kilowatt-hour commitment, and holds
+               the top spot for years afterwards.</p>
+          </div>
+        </li>
+
+        <li class="card" tabindex="0">
+          <img class="card__img" src="assets/2020-rise.jpg" alt="Wind turbines on open land">
+          <div class="card__body">
+            <h3 class="card__title">
+            <span class="card__year">2020</span>
+              <span class="card__name">The RISE strategy</span>
+            </h3>
+          </div>
+          <div class="card__reveal">
+            <p>Intel launches RISE &mdash; Responsible, Inclusive, Sustainable, Enabling &mdash;
+               setting 2030 goals and committing to use its scale to move the wider
+               technology industry, not just its own operations.</p>
+          </div>
+        </li>
+
+        <li class="card" tabindex="0">
+          <img class="card__img" src="assets/2030-water.jpg" alt="Aerial view of a water treatment facility">
+          <div class="card__body">
+            <h3 class="card__title">
+            <span class="card__year">2030</span>
+              <span class="card__name">Net positive water</span>
+            </h3>
+          </div>
+          <div class="card__reveal">
+            <p>Goals for the decade: 100% renewable electricity globally, net positive
+               water, and zero total waste to landfill. Chip fabrication is water-intensive,
+               which is exactly why returning more than is used matters.</p>
+          </div>
+        </li>
+
+        <li class="card" tabindex="0">
+          <img class="card__img" src="assets/2040-netzero.jpg" alt="Wind farm at sunset">
+          <div class="card__body">
+            <h3 class="card__title">
+            <span class="card__year">2040</span>
+              <span class="card__name">Net-zero operations</span>
+            </h3>
+          </div>
+          <div class="card__reveal">
+            <p>A commitment to net-zero greenhouse gas emissions across Intel&rsquo;s own
+               operations &mdash; Scope 1 and 2 &mdash; covering the factories and the
+               electricity that runs them.</p>
+          </div>
+        </li>
+
+        <li class="card" tabindex="0">
+          <img class="card__img" src="assets/2050-scope3.jpg" alt="Aerial view of a dense pine forest">
+          <div class="card__body">
+            <h3 class="card__title">
+            <span class="card__year">2050</span>
+              <span class="card__name">Net-zero value chain</span>
+            </h3>
+          </div>
+          <div class="card__reveal">
+            <p>The hardest target: net-zero upstream emissions across suppliers and
+               materials. Scope 3 is most of a chip company&rsquo;s real footprint, and it
+               cannot be reached alone.</p>
+          </div>
+        </li>
+
+      </ol>
+
+      <!-- Scroll progress. aria-hidden because it duplicates information the
+           scrollbar and the cards already carry -- it is a visual aid, not a
+           second source of truth for a screen reader to read out. -->
+      <!-- A slider role rather than aria-hidden: it is now clickable, so it is
+           a control, and a control a screen reader cannot see is a control some
+           people simply do not have. -->
+      <div class="progress" role="slider" tabindex="0"
+           aria-label="Timeline scroll position"
+           aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <span class="progress__fill"></span>
+        <span class="progress__dot"></span>
+      </div>
+
+      <p class="timeline__hint">
+        <span class="hint-desktop">Scroll or drag the bar to move through time &middot; hover a card for the detail</span>
+        <span class="hint-mobile">Scroll to move through time &middot; tap a card for the detail</span>
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p class="footer__note">
+      Student coursework. Milestones are drawn from Intel&rsquo;s published RISE
+      commitments and press releases. Photography is CC0 and Unsplash-licensed;
+      the Intel wordmark is public domain via Wikimedia Commons. Per-image
+      credits are in <code>assets/CREDITS.json</code>. Intel and the Intel logo
+      are trademarks of Intel Corporation &mdash; this page is not affiliated
+      with or endorsed by Intel.
+    </p>
+  </footer>
+
+  <!-- `defer` so the parser is never blocked: the script downloads alongside
+       the HTML and runs once the DOM is ready, which is also why it can query
+       for .track immediately without waiting for an event. -->
+  <script src="script.js" defer></script>
+
+</body>
+</html>

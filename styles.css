@@ -1,0 +1,846 @@
+/* ============================================================
+   Intel — Sustainability Through the Ages
+   ============================================================ */
+
+/* Design tokens. Every colour and space in the file comes from here, so the
+   palette can be changed in one place instead of hunted through the rules. */
+:root {
+  --intel-blue:       #0068B5;   /* Intel's primary brand blue */
+  --intel-deep:       #00285A;   /* deep navy, for the hero gradient */
+  --intel-night:      #001A3A;   /* the gradient's darkest stop */
+  --intel-light:      #00C7FD;   /* the bright accent in Intel's identity */
+  --ink:              #16161C;
+  --ink-soft:         #4A5568;
+  --ink-faint:        #77839A;   /* legal text, and nothing louder */
+  --surface:          #FFFFFF;
+  --surface-page:     #F3F4F7;
+  --border:           #E4E7EC;
+
+  --space-2:  8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+
+  /* ---- Type scale -------------------------------------------------------
+     A ladder, not a pile of one-off rem values. Each step is meaningfully
+     larger than the one below it -- roughly a 1.25 ratio at the small end,
+     opening up at the display sizes where the jumps need to be obvious.
+
+     The fluid ones use clamp(min, preferred, max): never smaller than the
+     first, never larger than the third, scaling with the viewport between.
+     That replaces three breakpoints with one line. */
+  /* The floor is 2rem, not 2.5rem. At 320px -- an iPhone SE, still the
+     narrowest screen worth designing for -- 2.5rem put "Sustainability" about
+     three pixels wider than the content box. It would have BROKEN mid-word
+     rather than overflowed, thanks to the overflow-wrap safety net, which is
+     the kind of failure that looks like a typo rather than a bug. Above roughly
+     490px the vw term takes over and nothing else changes. */
+  --t-display: clamp(2rem, 6.5vw, 4.5rem);     /* h1  32 → 72 */
+  /* The floor is 1.375rem, not 1.75rem. At 375px the h1 lands on its own floor
+     of 32px, so a 28px h2 sat 1.14x below it -- a section heading nearly as
+     loud as the page headline, which is not a hierarchy, it is two headlines.
+     22px restores a 1.45x step on a phone and changes nothing above ~690px,
+     where the vw term takes over. */
+  --t-h2:      clamp(1.5rem, 3.2vw, 2.5rem);   /* h2  24 → 40 */
+  /* The year's floor came down with the h2's. At 24px it was LARGER than the
+     section heading above it on every screen below 1024px -- a number inside a
+     card out-ranking the heading of the section containing it. Both floors were
+     set independently and neither was checked against the other, which is how
+     an inversion survives a scale that looks orderly written down. */
+  --t-year:    clamp(1.25rem, 2vw, 1.75rem);   /* year, inside h3  20 → 28 */
+  --t-h3:      1.0625rem;                      /* the milestone name   17 */
+  --t-lead:    clamp(1rem, 1.4vw, 1.1875rem);  /* hero subhead         16 → 19 */
+  --t-body:    1rem;                           /* 16 */
+  --t-small:   0.875rem;                       /* 14 */
+  --t-eyebrow: 0.75rem;                        /* 12, tracked out */
+
+  --radius: 14px;
+  --shadow-rest:  0 1px 3px rgba(0, 40, 90, .10);
+  --shadow-lift:  0 18px 40px rgba(0, 40, 90, .22);
+
+  --font: "Intel Clear", "Helvetica Neue", Arial, system-ui, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* At 72px a single long word can be wider than its column, and the default is
+   to let it overflow the page rather than break. "Sustainability" is fourteen
+   characters; in a 350px column at 52px it does not fit. This is the safety
+   net, not the plan -- the measures and breakpoints below are the plan. */
+h1, h2, h3, p, li { overflow-wrap: break-word; }
+
+body {
+  margin: 0;
+  font-family: var(--font);
+  color: var(--ink);
+  background: var(--surface-page);
+  line-height: 1.55;
+}
+
+/* ============================== HERO ============================== */
+
+/* LEFT-ALIGNED, not centred.
+
+   Centred hero, centred rule, centred subhead is the default shape of every
+   template, and it is what the sample looks like. Left alignment gives the page
+   a single vertical edge that the eyebrow, heading and cards all hang from --
+   which is how editorial layouts read as designed rather than as filled in.
+
+   The gradient runs to a DEEPER navy than the sample's mid-blue, and it is
+   angled so the light corner sits behind the logo. */
+.hero {
+  background:
+    radial-gradient(120% 140% at 8% 0%, rgba(0, 199, 253, .18) 0%, transparent 55%),
+    linear-gradient(160deg, var(--intel-blue) 0%, var(--intel-deep) 62%, var(--intel-night) 100%);
+  color: #FFFFFF;
+  padding: clamp(var(--space-12), 9vw, 120px) var(--space-6);
+  text-align: left;
+}
+
+/* Two columns: copy left, wafer right. `minmax(0, …)` on the first column is
+   what stops a long unbroken word forcing the grid wider than the page --
+   a grid track's default minimum is `auto`, which means "as wide as my content
+   demands", not "as wide as there is room for". */
+.hero__inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(var(--space-8), 6vw, 88px);
+
+  /* STRETCH, not center.
+
+     Centred, the photograph was a box of its own height floating beside a text
+     block of a different height -- neither edge lined up with anything, so the
+     two columns read as "some text, and also a picture" rather than as a pair.
+
+     Stretched, the image takes its height from the copy beside it. Top and
+     bottom edges align, the hero becomes two panels of equal height, and the
+     composition holds together at every width instead of only at the one where
+     the two happened to match. */
+  align-items: stretch;
+}
+
+/* The hero photograph — an aerial wind farm seen through cloud.
+
+   ⚠️ THE SAME RADIUS AS THE CARDS, from the same token. Not a similar-looking
+   number typed twice: if --radius changes, the hero and the eight cards move
+   together. A hero at 16px beside cards at 14px is the kind of two-pixel
+   disagreement nobody can name and everybody can feel.
+
+   Enough to read as deliberate, not enough to become the point.
+
+   3:2, close to the photograph's own shape, so the aerial sweep survives
+   rather than being cropped to a square. It also happens to land at roughly
+   the height of the copy beside it, which is what makes the two columns feel
+   set rather than stacked.
+
+   The hairline and glow are box-shadow, not borders -- a spread-only shadow
+   layers, so both cost one property and neither affects layout. */
+.hero__art {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow:
+    0 0 0 1px rgba(0, 199, 253, .35),
+    0 30px 70px rgba(0, 16, 40, .45);
+  width: 100%;
+
+  /* Height comes from the copy column. The floor is there for the case the
+     copy is short -- a very wide viewport where the headline fits on fewer
+     lines -- so the photograph can never collapse into a letterbox strip. */
+  height: 100%;
+  min-height: clamp(300px, 30vw, 460px);
+}
+
+.hero__art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* A dark vignette along the left edge only, where the photograph meets the
+   copy. It keeps the two columns from butting into each other without tinting
+   the image -- the greens and the cloud are why this photograph was chosen, and
+   a blue wash over the whole thing would flatten both. */
+.hero__art::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;      /* inherit, so it cannot drift from the frame */
+  background: linear-gradient(90deg, rgba(0, 26, 58, .40), transparent 32%);
+  pointer-events: none;
+}
+
+.hero__logo {
+  /* Sized by HEIGHT with width:auto, so the mark keeps its own proportions
+     whatever the viewport does. clamp() scales it with the headline rather
+     than pinning it to a fixed pixel size on every screen.
+
+     width/height are also set as ATTRIBUTES in the HTML. That is not
+     duplication -- the attributes give the browser the aspect ratio before the
+     file loads, so the hero does not jump when it arrives. */
+  display: block;
+  /* ⚠️ Sized AGAINST THE HEADLINE, not picked to look right on one screen.
+
+     At 34–46px it stood at 0.89 of the h1's cap height on desktop and 1.48 of
+     it at 375px -- the logo was the same size as the headline everywhere, and
+     larger than it on a phone. A mark and a message competing for the same
+     rank, with the mark winning on the screen where there is least room.
+
+     Now roughly 0.5 of cap height from 768px up. Landed by bracketing rather
+     than guessing: 0.60 read as competing with the headline, 0.45 read as
+     apologetic, and this sits between the two rejected ends. 28px tall and 76px
+     wide on a desktop.
+
+     Half the headline's cap height is a good rule of thumb for a wordmark above
+     a display line -- unmistakably present, unmistakably not the message.
+
+     The 18px floor is a legibility limit rather than a mathematical one. The
+     ratio would want ~16px at 375px, and the letterforms start closing up below
+     that on a non-retina screen -- so mobile is deliberately the loosest fit.
+     An illegible logo is a worse failure than a slightly large one. */
+  height: clamp(18px, 2.2vw, 28px);
+  width: auto;
+  margin: 0 0 var(--space-8);   /* left-aligned, and given room to breathe */
+}
+
+.hero__title {
+  font-size: var(--t-display);
+  font-weight: 700;
+  /* Big type needs NEGATIVE tracking and a tighter leading. At 72px the
+     default letter-spacing reads loose and the default line-height leaves a
+     gap you could park in. */
+  line-height: 1.03;
+  letter-spacing: -0.035em;
+  text-transform: uppercase;
+  margin: 0 0 var(--space-6);
+  max-width: 16ch;      /* forces the two-line break rather than <br> doing it */
+}
+
+.hero__rule {
+  display: block;
+  width: 88px; height: 4px;
+  margin: 0 0 var(--space-6);   /* left, with everything else */
+  background: var(--intel-light);
+}
+
+.hero__sub {
+  font-size: var(--t-lead);
+  line-height: 1.6;
+  margin: 0;
+  max-width: 52ch;      /* a measure, not a pixel width — keeps lines readable */
+  color: rgba(255, 255, 255, .88);
+}
+
+/* ============================ TIMELINE ============================ */
+
+.timeline { padding: var(--space-16) var(--space-6) var(--space-12); }
+
+/* An eyebrow above the heading. Small, tracked out, in the accent — it states
+   the span of the timeline and gives the section a second line of hierarchy
+   without another heading level competing with the h2. */
+.timeline__eyebrow {
+  margin: 0 0 var(--space-3);
+  font-size: var(--t-eyebrow);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--intel-blue);
+}
+
+/* Eyebrow and heading share one 1400px container so they sit on the same left
+   edge as the cards. The heading's own measure is applied INSIDE it -- setting
+   max-width on the heading itself while it had `margin: 0 auto` would have
+   centred a 16ch block, which is the opposite of the alignment being built. */
+.timeline__intro { max-width: 1400px; margin: 0 auto var(--space-12); }
+
+.timeline__heading {
+  margin: 0;
+  max-width: 18ch;
+  font-size: var(--t-h2);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  color: var(--intel-deep);
+}
+
+/* ---- The track: horizontal on large screens ---- */
+
+.track {
+  list-style: none;
+  margin: 0 auto;
+  /* ⚠️ Vertical padding is what stops the hover state being CLIPPED.
+
+     This is a scroll container, and CSS does not allow one axis to scroll while
+     the other stays visible -- `overflow-y: visible` silently computes to auto.
+     So the box clips vertically no matter what, and the hovered card, which
+     lifts 8px and scales to 1.02, was being cut off at the top along with its
+     drop shadow.
+
+     The room has to come from INSIDE the clipping box. 20px above covers the
+     lift plus half the scale; 48px below covers the other half plus the
+     shadow's 18px offset and 40px blur. */
+  padding: 20px 0 48px;
+  max-width: 1400px;
+
+  /* Flexbox does the layout. `nowrap` is what makes it a horizontal timeline
+     rather than a wrapping grid — the row is allowed to exceed the screen. */
+  display: flex;
+  flex-wrap: nowrap;
+  gap: var(--space-6);
+
+  overflow-x: auto;              /* ...and the overflow becomes a scroller */
+  overflow-y: hidden;
+  /* ⚠️ `proximity`, not `mandatory`.
+
+     Mandatory snap fights every programmatic scroll this page makes. Clicking
+     the rail at 70% calls scrollTo, mandatory yanks it to the nearest card
+     start, and with smooth behaviour the two animations argue on the way --
+     which reads as the scroll being buggy, because functionally it is.
+
+     It fights the user too: mandatory forbids resting between cards, so a
+     small wheel nudge is either ignored or overshoots to the next snap point.
+
+     `proximity` still snaps -- tidily, when you come to rest near a card -- and
+     lets a deliberate scroll land where it was aimed. */
+  /* ⚠️ overscroll-behavior-x: contain.
+
+     Without it, scrolling this track back past its start hands the leftover
+     gesture to the PAGE -- and on a trackpad the browser reads a horizontal
+     overscroll as the back-navigation swipe. Scrolling backwards through the
+     timeline could start pulling the browser out of the page entirely, which
+     is why reverse scrolling felt unreliable rather than merely stiff.
+
+     `contain` keeps the gesture inside the timeline: it still stops at the
+     start, it just stops rather than escaping. */
+  overscroll-behavior-x: contain;
+
+  scroll-snap-type: x proximity;
+  scroll-padding-left: var(--space-6);
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ---- Fading edges ------------------------------------------------------
+
+   Cards are hard-cut at the container edge, which reads as content being
+   clipped rather than continuing. A short gradient mask softens both ends so
+   the row looks like it carries on past the frame -- which it does.
+
+   The widths are CUSTOM PROPERTIES, not fixed values, because the fade should
+   only exist on a side that actually has more content: a fade at the left edge
+   when you are already scrolled to the start is fading nothing, and reads as a
+   smudge on the first card. script.js sets the two classes.
+
+   @property is what lets a custom property ANIMATE. Without registering it the
+   browser treats the value as an opaque string, so it would snap between 0 and
+   40px rather than easing -- and the snap happens exactly at the scroll
+   extremes, where it is most visible. */
+@property --fade-left  { syntax: '<length>'; inherits: false; initial-value: 0px; }
+@property --fade-right { syntax: '<length>'; inherits: false; initial-value: 0px; }
+
+.track {
+  --fade-left: 0px;
+  --fade-right: 0px;
+
+  -webkit-mask-image: linear-gradient(to right,
+      transparent 0, #000 var(--fade-left),
+      #000 calc(100% - var(--fade-right)), transparent 100%);
+  mask-image: linear-gradient(to right,
+      transparent 0, #000 var(--fade-left),
+      #000 calc(100% - var(--fade-right)), transparent 100%);
+
+  transition: --fade-left .25s ease, --fade-right .25s ease;
+}
+
+.track.fade-left  { --fade-left: 40px; }
+.track.fade-right { --fade-right: 40px; }
+
+/* The native scrollbar is hidden, because the progress rail below the timeline
+   replaces it.
+
+   ⚠️ Hiding a scrollbar normally removes an affordance and is a bad idea. It is
+   defensible here only because what replaces it is a REAL control, not a
+   decoration: the rail can be clicked to jump, operated with arrow keys, Home
+   and End, and carries role="slider" with a live value. Two scrollbars for one
+   axis is the actual problem being solved -- the native one and the rail were
+   reporting the same thing twice, one of them prettier. */
+/* Note the `.has-rail` guard: the scrollbar is hidden ONLY once the script has
+   confirmed the rail is live. Hiding it unconditionally in CSS would mean a
+   failed or blocked script left the timeline with no scrollbar AND no rail --
+   scrollable content with nothing on screen saying so. The affordance is
+   swapped, never simply removed. */
+.has-rail .track { scrollbar-width: none; }              /* Firefox */
+.has-rail .track::-webkit-scrollbar { display: none; }   /* Chrome, Safari, Edge */
+
+/* ---- The card ---- */
+
+.card {
+  position: relative;
+  flex: 0 0 300px;        /* fixed width, no growing or shrinking */
+  scroll-snap-align: start;
+
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-rest);
+
+  /* A cyan rule along the top edge that grows in when the card is active.
+     Drawn as a background rather than a pseudo-element, because the card
+     already uses ::before for nothing and a gradient sized from 0 to 100%
+     animates on the compositor. */
+  background-image: linear-gradient(90deg, var(--intel-light), var(--intel-light));
+  background-repeat: no-repeat;
+  background-position: 0 0;
+  background-size: 0% 4px;
+  transition: transform .28s ease, box-shadow .28s ease,
+              border-color .28s ease, background-size .34s ease;
+
+  /* NOT overflow: hidden.
+
+     It was there to keep the photo's corners inside the card radius, and it
+     also clipped the spine node -- which is deliberately positioned outside
+     the card, on the line above it. Half of every node was being cut off.
+
+     The image and the reveal now carry their own radius instead, so the one
+     thing that needed clipping is clipped and nothing else is. */
+  overflow: visible;
+
+}
+
+.card__img {
+  display: block;
+  width: 100%;
+  height: 190px;
+  object-fit: cover;   /* fills the frame at any photo shape, never squashed */
+  border-radius: var(--radius) var(--radius) 0 0;   /* was the parent's job */
+}
+
+.card__body { padding: var(--space-4) var(--space-4) var(--space-6); }
+
+/* ONE heading per card, holding both the year and the name.
+
+   The year used to be a <p> at 1.6rem sitting above an <h3> at 1.05rem -- a
+   paragraph rendering half again larger than the heading beneath it. The year
+   is the milestone's primary identifier, so the fix is not to shrink it; it is
+   to put it inside the heading where that size is honest. A screen reader now
+   announces "1968, Intel is founded" as one heading, which is what a timeline
+   entry actually is. */
+.card__title {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin: 0;
+  font-weight: 600;
+}
+
+.card__year {
+  font-size: var(--t-year);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--intel-blue);
+  /* Lining figures, so 1968 and 2050 have identical digit widths and the years
+     line up down the row instead of shuffling by a pixel or two. */
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.card__name {
+  font-size: var(--t-h3);
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+/* ---- The reveal ---- */
+
+.card__reveal {
+  /* Covers the whole card and sits above it. Hidden by opacity rather than
+     display:none so it can be TRANSITIONED — display cannot animate. */
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  padding: var(--space-6);
+
+  background: linear-gradient(160deg, rgba(0, 40, 90, .96), rgba(0, 104, 181, .96));
+  color: #FFFFFF;
+  border-radius: var(--radius);                      /* was the parent's job */
+
+  opacity: 0;
+  transform: translateY(8px);
+  /* Not clickable while hidden — without this, a link underneath would be
+     blocked by an invisible panel sitting on top of it. */
+  pointer-events: none;
+  transition: opacity .28s ease, transform .28s ease;
+}
+
+.card__reveal p { margin: 0; font-size: var(--t-body); line-height: 1.55; }
+
+/* ⚠️ :focus-within alone did NOT work here, and it is worth knowing why: it
+   fires when a focusable DESCENDANT is focused, and these cards contain only
+   images and text. Nothing inside could ever take focus, so the rule never
+   matched and a keyboard user got no reveal at all.
+
+   Fixed at the markup end -- each card carries tabindex="0" -- so the card
+   itself is the thing that receives focus. :focus-visible rather than :focus,
+   so a mouse click does not leave a focus ring behind. */
+.card:hover,
+.card.is-active,
+.card:focus-visible,
+.card:focus-within {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: var(--shadow-lift);
+  border-color: var(--intel-blue);
+  background-size: 100% 4px;     /* the accent rule draws itself in */
+}
+.card:hover .card__reveal,
+.card.is-active .card__reveal,
+.card:focus-visible .card__reveal,
+.card:focus-within .card__reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* A real focus ring. Removing the outline without replacing it is the single
+   most common accessibility regression in CSS; this replaces it deliberately. */
+.card:focus-visible {
+  outline: 3px solid var(--intel-light);
+  outline-offset: 3px;
+}
+
+/* ---- The hint line ---- */
+
+.timeline__hint {
+  max-width: 1400px;
+  margin: var(--space-6) auto 0;
+  /* Centred, deliberately. It is an instruction about the control directly
+     above it, not part of the editorial column -- centring places it under the
+     middle of the thing it describes rather than at the far left of it. */
+  text-align: center;
+  color: var(--ink-soft);
+  font-size: var(--t-small);
+}
+.hint-mobile { display: none; }
+
+/* ============================== FOOTER ============================== */
+
+/* Centred.
+
+   The body of the page is left-aligned and the footer is not, which is a
+   deliberate break rather than a leftover: the footer is closing matter, not
+   part of the editorial column, and centring it reads as a full stop. The rule
+   above it does the same job -- it separates rather than continues. */
+.footer {
+  text-align: center;
+  padding: var(--space-16) var(--space-6);
+  border-top: 1px solid var(--border);
+  color: var(--ink-soft);
+  font-size: var(--t-small);
+}
+
+/* One paragraph, set WIDE.
+
+   At 68ch this ran to four and a half cramped lines and read as a block of
+   small print. Measured rather than guessed: 350 characters at this size needs
+   roughly 780px to land on three lines, and 900px for two and a half.
+
+   ⚠️ That is past the 45–75 character measure you would use for anything meant
+   to be READ. Deliberate here -- footer fine print is scanned for a name or a
+   licence, not read start to finish, and the readable measure is the wrong
+   constraint for text nobody reads in sequence. It is the one place on this
+   page that rule gets broken, and it gets broken on purpose.
+
+   The size drops a step with it, so a wider block does not also become a
+   louder one. */
+.footer__note {
+  margin: 0 auto;
+  max-width: min(100%, 860px);
+  font-size: var(--t-eyebrow);
+  line-height: 1.9;               /* open, so long lines stay trackable */
+  letter-spacing: .005em;
+}
+
+
+
+/* ⚠️ `.footer code` was declared TWICE here, at .9em and .92em -- a rule added
+   once, forgotten, and added again two pixels different. Which won came down to
+   source order. One declaration now. */
+.footer a { color: var(--intel-blue); }
+.footer a:hover { color: var(--intel-deep); }
+.footer code { font-size: .92em; color: var(--ink); }
+
+/* ========================== RESPONSIVE ============================= */
+
+/* ⚠️ TWO breakpoints, because the hero and the timeline fail at different
+   widths. Using one number for both is what leaves a band where the page is
+   technically "responsive" and visibly broken.
+
+   The hero goes first, at 1024px. Below that its two columns are about 350px
+   each, and the headline is sized at 6.5vw -- roughly 52px at that viewport --
+   so a single word is wider than the column holding it. The timeline is fine
+   down to 768px, because a 300px card in a horizontal scroller does not care
+   how narrow the screen is. */
+@media (max-width: 1024px) {
+  .hero__inner {
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+  }
+  /* One column, so the measures that forced a two-line headline now only
+     narrow it. Released, and the column does the wrapping. */
+  .hero__title { max-width: 20ch; }
+  .hero__art {
+    height: auto;
+    aspect-ratio: 16 / 9;     /* the copy is above it now, nothing to match */
+    min-height: 0;
+  }
+}
+
+/* ======================== TIMELINE: STACK ========================= */
+
+/* Below 768px the timeline stops being a horizontal scroller and becomes a
+   vertical stack. Sideways scrolling on a phone competes with the page's own
+   vertical scroll, and the browser has to guess which one you meant. */
+@media (max-width: 768px) {
+
+  .track {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /* ⚠️ BOTH axes, not just overflow-x.
+
+       CSS does not allow one axis to be `visible` while the other is not: the
+       visible one computes to `auto`. Setting overflow-x alone left
+       overflow-y: hidden in place, which quietly kept the track a scroll
+       container -- on the one layout where nothing should scroll but the page. */
+    overflow: visible;
+    /* No horizontal overflow to hint at, and a mask on a vertical stack would
+       just fade the tops and bottoms of cards for no reason. */
+    -webkit-mask-image: none;
+    mask-image: none;
+    scroll-snap-type: none;
+    gap: var(--space-4);
+    /* The 20px of headroom existed for the hover lift, and there is no hover
+       here. The 48px below it was for the rail, which is hidden. */
+    padding: 0;
+  }
+
+  .card {
+    flex: 1 1 auto;            /* full width of the column */
+    width: 100%;
+  }
+
+  .card__img { height: 200px; }
+
+  /* On a touch screen there is no hover, so a hover-only reveal would hide
+     this content permanently. Shown inline instead: still styled, still
+     branded, but no longer conditional on a pointer that does not exist. */
+  .card__reveal {
+    position: static;
+    opacity: 1;
+    transform: none;
+    pointer-events: auto;
+    padding: var(--space-4);
+  }
+
+  .card:hover,
+  .card.is-active,
+  .card:focus-visible,
+  .card:focus-within { transform: none; box-shadow: var(--shadow-rest); }
+
+  .hint-desktop { display: none; }
+  .hint-mobile  { display: inline; }
+
+  .timeline { padding: var(--space-12) var(--space-4); }
+  .hero     { padding: var(--space-12) var(--space-4); }
+
+  /* The measures that force a two-line headline on a wide screen would strangle
+     it on a narrow one — 16ch at 40px is four words a line. Released, and the
+     viewport does the wrapping. */
+  .hero__title, .timeline__heading { max-width: none; }
+
+  /* 12px at 1.9 leading is fine on a desktop footer and too small on a phone
+     held at arm's length. Back up a step, tighter, and narrower -- a long
+     measure needs a wide screen to be scannable, and there isn't one. */
+  .footer__note {
+    font-size: var(--t-small);
+    line-height: 1.7;
+    max-width: 100%;
+  }
+  .footer { padding: var(--space-12) var(--space-4); }
+
+  .timeline__intro { margin-bottom: var(--space-8); }
+}
+
+/* ========================= REDUCED MOTION ========================== */
+
+/* Some people get motion sick from transforms. The reveal still works; it
+   just stops moving. */
+@media (prefers-reduced-motion: reduce) {
+  .card, .card__reveal { transition: none; }
+  .card:hover, .card.is-active, .card:focus-within { transform: none; }
+}
+
+/* ===================== SCROLL PROGRESS (pure CSS) =====================
+
+   A dot that travels the line as the timeline is scrolled, and a fill that
+   grows behind it.
+
+   Driven by script.js. This was CSS scroll-driven animation first, which is
+   the more elegant answer and works in Chrome, Edge and Safari 26 -- but not
+   Firefox, where it degrades to a rail that never moves. Fifteen lines of
+   JavaScript work everywhere, and the rail is the kind of feature that is
+   worse broken than absent.
+
+   The script owns POSITION only. Every colour, size and transition stays
+   here, so the rail can be restyled without touching the logic. */
+
+.progress {
+  position: relative;
+  max-width: 1400px;
+  /* No top margin: the track's own bottom padding, which exists to keep the
+     hover state from being clipped, already provides the gap. Adding one here
+     would double it. */
+  margin: 0 auto;
+  height: 6px;
+  border-radius: 99px;
+  background: var(--border);
+
+  /* Hidden by default and shown only where the feature exists. A rail whose
+     dot cannot move is worse than no rail -- it looks like a broken control
+     rather than an absent one. */
+  display: none;
+}
+
+.progress__fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  border-radius: 99px;
+  background: linear-gradient(90deg, var(--intel-light), var(--intel-blue));
+}
+
+.progress__dot {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 16px; height: 16px;
+  margin: -8px 0 0 -8px;        /* centres the dot on its own position */
+  border-radius: 50%;
+  background: var(--surface);
+  border: 3px solid var(--intel-blue);
+  box-shadow: 0 2px 8px rgba(0, 40, 90, .28);
+}
+
+/* Shown by script.js, and only when there is actually something to scroll --
+   a progress rail for content that already fits is a control reporting on
+   nothing. The class is added by JS rather than the rail being visible by
+   default, so if the script fails to load nothing broken is left on screen. */
+.progress.is-active { display: block; }
+
+/* The travel itself is set by script.js as inline width/left. Transitioned so
+   a programmatic jump (clicking the rail) glides instead of teleporting, while
+   ordinary scrolling still tracks the finger 1:1 -- the transition is short
+   enough to be invisible during a drag. */
+.progress__fill,
+.progress__dot {
+  /* ⚠️ width and left MUST share a duration and easing curve.
+
+     The dot sits at the fill's leading edge, so if they animate at different
+     rates the dot detaches from the end of the bar mid-move and rejoins it on
+     arrival -- a wobble that is small, constant, and impossible to unsee once
+     noticed. They are one object; they move as one. */
+  transition: width .18s ease, left .18s ease,
+              transform .18s ease, background .18s ease;
+}
+
+/* The rail is dragged, so it says so — grab, then grabbing while held. */
+.progress { cursor: grab; user-select: none; -webkit-user-select: none; }
+.progress.is-dragging { cursor: grabbing; }
+
+/* Snap off while dragging. `proximity` pulls every programmatic scroll toward
+   the nearest card, so a drag could only ever land on a snap point -- it read
+   as the bar refusing to move. Restored the moment the pointer is released, so
+   the tidy resting behaviour survives. */
+.track.is-dragging { scroll-snap-type: none; }
+
+/* Dragging must not select the page. A drag that starts a text selection ends
+   as soon as the browser decides it was a selection all along. */
+.track.is-dragging,
+.track.is-dragging * { user-select: none; -webkit-user-select: none; }
+
+/* ⚠️ touch-action: none is what makes a touch drag possible at all.
+
+   Without it the browser claims the gesture for page scrolling before a single
+   pointermove reaches the handler, so the rail works with a mouse and does
+   nothing under a finger -- and that is the harder failure to notice, because
+   it only appears on the device nobody tests on first.
+
+   A bigger hit area comes with it: 6px is the visible bar, and a 6px drag
+   target is one most people miss.
+
+   ⚠️ NOT padding. box-sizing: border-box is global in this file, so height 6px
+   with padding-block 10px would have collapsed the content box to zero and the
+   bar would have vanished -- while `inset: 0` on the fill resolves against the
+   PADDING box, so the fill would have grown to 26px tall at the same moment.
+   A pseudo-element extends the catchable area without entering the box model. */
+.progress { touch-action: none; }
+
+.progress::before {
+  content: "";
+  position: absolute;
+  inset: -10px 0;        /* 10px of reach above and below, invisible */
+}
+
+/* During a drag the dot must sit exactly under the finger. The 0.18s ease that
+   makes a click glide would make a drag lag behind by a fifth of a second,
+   which reads as the bar being broken rather than as easing. */
+.progress.is-dragging .progress__fill,
+.progress.is-dragging .progress__dot { transition: none; }
+.progress:focus-visible {
+  outline: 3px solid var(--intel-light);
+  outline-offset: 4px;
+}
+
+/* Stacked vertically there is no horizontal scroll to report. */
+@media (max-width: 768px) {
+  /* ⚠️ BOTH selectors, and the second is the one that matters.
+
+     `.progress.is-active { display: block }` is two classes; `.progress` is
+     one, and a media query adds no specificity of its own. So this rule LOST
+     to it, and the rail stayed visible on mobile whenever the class happened
+     to be on the element.
+
+     It looked fine only because the script removes `is-active` when nothing can
+     scroll -- so a stylesheet rule that does not work was masked by JavaScript
+     that does. Matching the specificity makes the CSS true on its own. */
+  .progress,
+  .progress.is-active { display: none; }
+}
+
+/* The dot is motion tied to scrolling, which is exactly the pairing that
+   causes trouble for people sensitive to it. */
+@media (prefers-reduced-motion: reduce) {
+  .progress__fill, .progress__dot { transition: none; }
+}
+
+/* Pointing at a hovered card rather than reporting scroll position. Lit in the
+   accent so it reads as "this one" rather than as the ordinary position dot.
+   The dot already transitions left, so moving it to the card glides. */
+.progress__dot.is-pointing {
+  background: var(--intel-light);
+  border-color: var(--surface);
+  transform: scale(1.25);
+  box-shadow: 0 0 0 4px rgba(0, 199, 253, .28), 0 2px 8px rgba(0, 40, 90, .28);
+}
+/* The fill EXTENDS to the dot rather than dimming, so the bar stays one object.
+
+   It keeps its gradient. Flattening it to a single colour on hover made the bar
+   change identity as well as length -- two things happening for one action, and
+   the flat version read as a different control rather than the same one showing
+   a different value. The DOT is what changes colour; the bar just moves. */
+
+
