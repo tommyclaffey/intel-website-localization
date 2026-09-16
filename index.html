@@ -40,13 +40,22 @@
 
        The options are built in localize.js from the dictionary itself, so a new
        language is a data change and this markup never moves. -->
-  <div class="langbar">
-    <label class="langbar__label" for="lang-select" data-i18n="a11y.lang">Choose a language</label>
-    <select class="langbar__select" id="lang-select"></select>
-  </div>
 
   <!-- ============================== HERO ============================== -->
   <header class="hero">
+    <!-- The language picker lives INSIDE the hero, on the dark gradient, as part
+         of the page's header -- not in a grey strip of its own above it. It is
+         navigation-level: the first thing someone who cannot read the page
+         needs, so it sits where headers keep their controls. -->
+    <div class="hero__bar">
+      <div class="lang">
+        <label class="langbar__label" for="lang-select" data-i18n="a11y.lang">Choose a language</label>
+        <!-- A globe is the one language icon that needs no language to read. -->
+        <i class="bi bi-globe2 lang__icon" aria-hidden="true"></i>
+        <select class="langbar__select lang__select" id="lang-select"></select>
+        <i class="bi bi-chevron-down lang__chevron" aria-hidden="true"></i>
+      </div>
+    </div>
     <div class="hero__inner">
       <div class="hero__copy">
       <!-- Intel's official mark, not a text approximation.

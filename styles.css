@@ -1047,28 +1047,6 @@ h1, h2, h3 { font-family: var(--font); }
   --bs-form-invalid-border-color: #B42318;
 }
 
-/* ---- Language bar: was white text on a light grey page (≈1.1:1) ---- */
-.langbar__select {
-  color: var(--ink);
-  background: var(--surface);
-  border-color: var(--bs-border-color);
-}
-.langbar__select:hover { background: var(--surface); border-color: var(--intel-blue); }
-.langbar__select:focus-visible { outline-color: var(--intel-blue); }
-
-/* ---- Language bar spacing ----
-
-   The bar had 16px above the select and 0 below, so the control sat on the
-   hero's top edge. Equal padding top and bottom gives it a band of its own.
-
-   Its inline edge now matches the hero content (1400px max, centred), so on a
-   wide screen the select lines up with the photo instead of hugging the window. */
-.langbar {
-  padding-block: var(--space-3);
-  padding-inline: max(var(--space-6), calc((100% - 1400px) / 2));
-}
-
-
 /* ---- Shared section intro ---- */
 .pillars, .subscribe { padding: var(--space-16) 0; }
 .pillars { border-top: 1px solid var(--border); }
@@ -1378,3 +1356,79 @@ h1, h2, h3 { font-family: var(--font); }
 
 /* ---- Contrast fixes surfaced by Lighthouse ---- */
 .footer { color: var(--ink-soft); }
+
+
+/* ========================================================================
+   LANGUAGE PICKER — in the hero header
+   ========================================================================
+
+   It sat in a grey strip above the hero: a plain OS select, floating on its
+   own, with uneven padding. Now it is part of the header on the gradient --
+   a pill with a globe and a chevron, on the inline END (top right in English,
+   top left in Arabic). */
+
+.hero { padding-top: var(--space-6); }
+
+.hero__bar {
+  max-width: 1400px;
+  margin: 0 auto clamp(var(--space-8), 6vw, 72px);
+  display: flex;
+  justify-content: flex-end;          /* flex-end follows dir: flips in Arabic */
+}
+
+.lang { position: relative; display: inline-flex; align-items: center; }
+
+/* Icons are painted over the select, not inside it -- a <select> cannot hold
+   an icon. pointer-events: none so a click on either still opens the menu. */
+.lang__icon,
+.lang__chevron {
+  position: absolute;
+  /* Above the select. The select's backdrop-filter blurs whatever sits BEHIND
+     it, and the globe comes first in the markup -- without this it rendered as
+     a soft blur instead of an icon. */
+  z-index: 1;
+  pointer-events: none;
+  line-height: 1;
+  color: rgba(255, 255, 255, .9);
+}
+.lang__icon    { inset-inline-start: 16px; font-size: 1rem; }
+.lang__chevron { inset-inline-end: 16px; font-size: .7rem; transition: transform .2s ease; }
+
+/* appearance: none removes the OS arrow and its built-in padding -- the
+   source of the lopsided spacing. The chevron is drawn by the page instead,
+   so both sides of the text are measured, not left to the operating system.
+   Padding is logical, so the globe and chevron swap sides in Arabic. */
+.langbar__select.lang__select {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 44px;                    /* touch target */
+  margin: 0;
+  padding-block: 0;
+  padding-inline: 42px 38px;
+  font-family: var(--font);
+  font-size: var(--t-small);
+  font-weight: 600;
+  line-height: 42px;
+  color: #fff;
+  background: rgba(255, 255, 255, .08);
+  border: 1px solid rgba(255, 255, 255, .30);
+  border-radius: 999px;
+  backdrop-filter: blur(6px);
+  cursor: pointer;
+  transition: background .18s ease, border-color .18s ease;
+}
+.langbar__select.lang__select:hover {
+  background: rgba(255, 255, 255, .16);
+  border-color: rgba(255, 255, 255, .55);
+}
+.lang:hover .lang__chevron { transform: translateY(1px); }
+.langbar__select.lang__select:focus-visible {
+  outline: 3px solid var(--intel-light);
+  outline-offset: 3px;
+}
+.langbar__select.lang__select option { color: var(--ink); background: var(--surface); font-weight: 400; }
+
+@media (max-width: 768px) {
+  .hero { padding-top: var(--space-4); }
+  .hero__bar { margin-bottom: var(--space-8); }
+}
