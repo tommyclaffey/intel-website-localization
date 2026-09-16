@@ -114,7 +114,7 @@ and none of it was visible in English.
 | Card-position ratio | Measured from `railBox.right` in RTL, `railBox.left` in LTR |
 | Edge fades | `Math.abs()` on scroll position before comparing |
 | Click-to-jump | Distance measured from the right edge; target negated |
-| Arrow keys | **Follow the script, not the keycap.** Right arrow moves *forward*, which is leftward in Arabic. `Home`/`End` flip too. |
+| Arrow keys | **Left and Right follow the screen; Up and Down follow time.** In Arabic, Left moves the dot left, which is *forward* in time (ARIA slider rule for RTL). The first version had Right = forward everywhere, which moved the dot opposite to the key in Arabic — caught in the final audit. |
 | Direction check | `document.documentElement.dir` read **live**, never cached — the user can switch mid-session |
 | Language change | `document.addEventListener('languagechange', schedule)` re-measures on the next frame |
 
@@ -196,6 +196,16 @@ water" instead of the same two words three times.
 **The form is honest.** There is no backend, so the confirmation says the page is
 a demo and nothing was sent. Email fields stay left-to-right even in Arabic,
 because an address is not Arabic text.
+
+**The language picker lives in the hero header.** A pill on the gradient with a
+globe and chevron, `appearance: none` so the padding is measured rather than left
+to the operating system, 44px tall for touch. It sits on the inline end: top right
+in English, top left in Arabic.
+
+**The hero photo now has descriptive, translated alt text.** Project 2 used
+`alt=""` because the photo is decorative, which is correct practice — but this
+rubric asks for descriptive alt attributes, so it describes the scene in all four
+languages.
 
 **`?lang=ar` in the URL** opens a specific language — the only way to *share* the
 Arabic version with a global team is a link.

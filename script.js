@@ -320,18 +320,25 @@
     const step = track.clientWidth * 0.9;   // most of a screen, keeping context
     let delta = 0;
 
-    /* ⚠️ Arrow keys follow the SCRIPT, not the keycap.
+    /* ⚠️ Left and Right follow the SCREEN. Up and Down follow the timeline.
 
-       In Arabic the timeline advances leftwards, so ArrowLeft has to move
-       forward. Hard-coding right-means-forward is the accessibility bug that
-       survives every visual QA pass, because the layout looks perfect and only
-       the keyboard disagrees.
+       In Arabic the timeline runs right-to-left and the progress dot travels
+       leftward, so pressing Left must move the dot left -- which is FORWARD in
+       time. This is the ARIA Authoring Practices rule for horizontal sliders in
+       RTL: the arrow you press is the way the thumb moves on screen.
 
+       The first version wired ArrowRight to "forward" in every language, which
+       in Arabic moved the dot the opposite way to the key. It survived visual
+       QA because the layout was perfect; only the keyboard disagreed.
+
+       Up/Down have no screen direction, so they mean previous/next in time.
        Home and End are unaffected: "start" and "end" are already logical. */
     const forward = isRTL() ? -step : step;
 
-    if (event.key === 'ArrowRight' || event.key === 'ArrowDown') delta = forward;
-    else if (event.key === 'ArrowLeft' || event.key === 'ArrowUp') delta = -forward;
+    if (event.key === 'ArrowRight') delta = step;          // visually right, both directions
+    else if (event.key === 'ArrowLeft') delta = -step;     // visually left, both directions
+    else if (event.key === 'ArrowDown') delta = forward;   // later in time
+    else if (event.key === 'ArrowUp') delta = -forward;    // earlier in time
     else if (event.key === 'Home') delta = isRTL() ? track.scrollWidth : -track.scrollWidth;
     else if (event.key === 'End') delta = isRTL() ? -track.scrollWidth : track.scrollWidth;
     else return;                            // not ours — let the browser have it
